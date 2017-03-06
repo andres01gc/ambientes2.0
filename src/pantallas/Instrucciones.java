@@ -1,11 +1,10 @@
 package pantallas;
 
-import processing.core.PImage;
+import juego.PantallaJuego;
 import setup.AdministradorPantalla;
 import setup.Pantalla;
 
 public class Instrucciones extends Pantalla {
-
 
 
     @Override
@@ -17,6 +16,8 @@ public class Instrucciones extends Pantalla {
     @Override
     public void pintar() {
         app.fill(0);
+
+        app.text("aqui se supone que van las instruccioness", 500, 500);
 
     }
 

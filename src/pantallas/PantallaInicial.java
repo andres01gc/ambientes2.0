@@ -1,14 +1,14 @@
 package pantallas;
 
 import processing.core.PImage;
-import resources.KinectLink;
+import revisar.KinectLink;
 import setup.AdministradorPantalla;
 import setup.Pantalla;
 
 public class PantallaInicial extends Pantalla {
 
     private PImage fondo;
-    private KinectLink kl;
+    //  private KinectLink kl;
 
     @Override
     public void iniciar() {
@@ -16,7 +16,7 @@ public class PantallaInicial extends Pantalla {
         app.textSize(50);
         inicializarImgs();
         app.textAlign(app.CENTER, app.CENTER);
-        kl = KinectLink.getInstance();
+        //  kl = KinectLink.getInstance();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class PantallaInicial extends Pantalla {
         app.background(200);
         app.text("presiona cualquier tecla para continuar", 960, 905);
 
-        kl.drawSkeleton();
+        //    kl.drawSkeleton();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PantallaInicial extends Pantalla {
 
 
     public void inicializarImgs() {
-       // fondo = app.loadImage("data/inicio/fondo.png");
+        // fondo = app.loadImage("data/inicio/fondo.png");
 
 
     }
@@ -43,7 +43,7 @@ public class PantallaInicial extends Pantalla {
     @Override
     public void mousePressed() {
         // TODO Auto-generated method stub
-    //    AdministradorPantalla.cambiarPantalla(new Instrucciones());
+            AdministradorPantalla.cambiarPantalla(new Instrucciones());
         super.mousePressed();
     }
 

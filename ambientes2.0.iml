@@ -30,5 +30,18 @@
         <jarDirectory url="file://$MODULE_DIR$/libs/kinectPV2" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/libs/p3.01/library" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/libs/p3.01/library" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/libs/p3.01/library" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/libs/p3.01/library" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>

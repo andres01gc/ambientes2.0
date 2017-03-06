@@ -1,10 +1,5 @@
 package pantallas.visualInterface;
 
-import info.Info;
-import pantallas.PantallaJuego;
-import processing.core.PImage;
-import processing.core.PVector;
-
 import setup.Interfaz;
 
 import java.util.Observable;

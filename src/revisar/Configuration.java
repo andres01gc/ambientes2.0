@@ -1,6 +1,6 @@
 package revisar;
 
-import pantallas.PantallaJuego;
+import juego.PantallaJuego;
 import processing.core.PApplet;
 import root.Logica;
 import setup.Pantalla;
