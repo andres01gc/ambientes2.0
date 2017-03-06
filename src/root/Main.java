@@ -62,24 +62,52 @@ public class Main extends PApplet {
                 0, 0, 0
         };
 
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    if (inString != null) {
+                        valString = inString.split(",");
+                        System.out.println("linea completa: " + inString);
+                        System.out.println("strings " + valString[0] + "  " + valString[1] + "  " + valString[2] + "  ");
+
+                        valorFloats = new float[]{
+                                valorFloats[0] = Float.parseFloat(valString[0]),
+                                valorFloats[1] = Float.parseFloat(valString[1]),
+                                valorFloats[2] = Float.parseFloat(valString[2])
+                        };
+
+                        System.out.println("float " + valorFloats[0] + "  " + valorFloats[1] + "  " + valorFloats[2] + "  ");
+                    }
+
+                    try {
+                        Thread.sleep(33);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     public void draw() {
         background(255);
 
-        if (inString != null) {
-            valString = inString.split(",");
-            System.out.println("linea completa: " + inString);
-            System.out.println("strings " + valString[0] + "  " + valString[1] + "  " + valString[2] + "  ");
-
-            valorFloats = new float[]{
-                    valorFloats[0] = Float.parseFloat(valString[0]),
-                    valorFloats[1] = Float.parseFloat(valString[1]),
-                    valorFloats[2] = Float.parseFloat(valString[2])
-            };
-
-            System.out.println("float " + valorFloats[0] + "  " + valorFloats[1] + "  " + valorFloats[2] + "  ");
-        }
+//        if (inString != null) {
+//            valString = inString.split(",");
+//            System.out.println("linea completa: " + inString);
+//            System.out.println("strings " + valString[0] + "  " + valString[1] + "  " + valString[2] + "  ");
+//
+//            valorFloats = new float[]{
+//                    valorFloats[0] = Float.parseFloat(valString[0]),
+//                    valorFloats[1] = Float.parseFloat(valString[1]),
+//                    valorFloats[2] = Float.parseFloat(valString[2])
+//            };
+//
+//            System.out.println("float " + valorFloats[0] + "  " + valorFloats[1] + "  " + valorFloats[2] + "  ");
+//        }
         logica.pintar();
     }
 
