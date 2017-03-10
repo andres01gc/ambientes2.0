@@ -23,7 +23,8 @@ public class Enemigo {
     float maxforce;    // Maximum steering force
     float maxspeed;    // Maximum speed
     private float movx = 0;
-    private float velX=2;
+    private float velX = 2;
+    private boolean m;
 
 
     Enemigo(float x, float y, float rango) {
@@ -33,6 +34,11 @@ public class Enemigo {
 
         this.rango = rango;
         velX = app.random(5);
+
+
+        if (app.random(1) < 0.3) {
+            m = true;
+        }
     }
 
     public void pintar(float fixX) {
@@ -53,20 +59,22 @@ public class Enemigo {
     public void mover(float vel) {
         location.y += vel;
 
-        if (movx > (rango/2f)- velX) {
-            mov = false;
-            movx = (rango/2f) - velX;
-        } else if (movx < -(rango/2f) + velX) {
-            movx = -(rango/2f) + velX;
-            mov = true;
+
+        if (m) {
+            if (movx > (rango / 2f) - velX) {
+                mov = false;
+                movx = (rango / 2f) - velX;
+            } else if (movx < -(rango / 2f) + velX) {
+                movx = -(rango / 2f) + velX;
+                mov = true;
+            }
+
+            if (mov) movx += velX;
+
+            if (!mov) movx -= velX;
+
         }
-
-        if (mov) movx += velX;
-
-        if (!mov) movx -= velX;
-
-
-     //   movx = rango/2;
+        //   movx = rango/2;
 
 
     }

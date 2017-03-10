@@ -97,8 +97,13 @@ public class Path {
             e.pintar(posX);
             e.mover(vel.y);
 
-            if (e.location.y > app.width + 100) enemigos.remove(e);
+            if (e.location.y > app.height + 100) {
+               // System.out.println("eleiminia enemigos");
+
+                enemigos.remove(e);
+            }
         }
+        System.out.println("enemigos "+enemigos.size());
 
     }
 
@@ -108,8 +113,11 @@ public class Path {
             Moneda e = monedas.get(i);
             e.pintar(posX);
             e.mover(vel.y);
-            if (e.location.y > app.width + 100) enemigos.remove(e);
+            {
+                if (e.location.y > app.height + 100) monedas.remove(e);
+            }
         }
+         System.out.println("monedas "+monedas.size());
 
     }
 

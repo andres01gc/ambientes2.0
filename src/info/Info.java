@@ -31,6 +31,8 @@ public class Info {
 
     public PImage onF;
     public PImage onL;
+    public PImage inst1;
+    public PImage inst2;
 
     public void loadInicio() {
         ima1 = app.loadImage("../data/resources/pantallaInicial/1.png");
@@ -86,4 +88,11 @@ public class Info {
         return info;
     }
 
+    public void loadInstrucciones() {
+
+        inst1 = app.loadImage("../data/resources/instrucciones/28.png");
+        inst2 = app.loadImage("../data/resources/instrucciones/29.png");
+
+
+    }
 }
