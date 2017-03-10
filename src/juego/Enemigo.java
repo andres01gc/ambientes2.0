@@ -10,33 +10,66 @@ import root.Logica;
 public class Enemigo {
 
 
+    private float rango;
     // All the usual stuff
     PVector location;
     PVector velocity;
     PVector acceleration;
     PApplet app = Logica.getApp();
 
+
+    public boolean mov;
     float r;
     float maxforce;    // Maximum steering force
     float maxspeed;    // Maximum speed
+    private float movx = 0;
+    private float velX=2;
 
 
-    Enemigo() {
-        location = new PVector(app.width / 2, 800);
+    Enemigo(float x, float y, float rango) {
+        location = new PVector(x, y);
         velocity = new PVector();
         acceleration = new PVector();
 
+        this.rango = rango;
+        velX = app.random(5);
     }
 
-    public void pintar() {
+    public void pintar(float fixX) {
 
-        app.stroke(0);
-        app.strokeWeight(5);
-        app.ellipse(location.x, location.y, 50, 50);
-        location.x = app.mouseX;
-        location.y = app.mouseY;
+        app.pushMatrix();
+
+
+        app.translate(location.x + movx + fixX, location.y);
+        app.rotate(app.PI / 4);
+        // app.stroke(0, lifespan);
+        /// app.strokeWeight(2);
+        app.ellipse(0, 0, 10, 10);
+        app.popMatrix();
+
     }
 
+
+    public void mover(float vel) {
+        location.y += vel;
+
+        if (movx > (rango/2f)- velX) {
+            mov = false;
+            movx = (rango/2f) - velX;
+        } else if (movx < -(rango/2f) + velX) {
+            movx = -(rango/2f) + velX;
+            mov = true;
+        }
+
+        if (mov) movx += velX;
+
+        if (!mov) movx -= velX;
+
+
+     //   movx = rango/2;
+
+
+    }
 
     //codigo de The nature of code
     void seek(PVector target) {
@@ -70,6 +103,7 @@ public class Enemigo {
         // Now we must find the normal to the path from the predicted location
         // We look at the normal for each line segment and pick out the closest one
 
+        /**/
         PVector normal = null;
         PVector target = null;
         float worldRecord = 1000000;  // Start with a very high record distance that can easily be beaten
@@ -78,8 +112,8 @@ public class Enemigo {
         for (int i = 0; i < p.points.size() - 1; i++) {
 
             // Look at a line segment
-            PVector a = p.points.get(i);
-            PVector b = p.points.get(i + 1);
+            PVector a = p.points.get(i).getPos();
+            PVector b = p.points.get(i + 1).getPos();
 
             // Get the normal point to that line
             PVector normalPoint = getNormalPoint(predictLoc, a, b);

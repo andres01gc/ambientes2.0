@@ -28,9 +28,8 @@ public class Main extends PApplet {
         } else {
             PApplet.main(appletArgs);
         }
-
-
     }
+
 
     public void settings() {
         fullScreen(P3D);
@@ -47,8 +46,10 @@ public class Main extends PApplet {
         Pantalla.app = this;
         //	app = this;
         logica = new Logica(this);
+    }
 
 
+    public void escucharArduino() {
         // size(400, 400);
         frameRate(200);
         println(SerialPortList.getPortNames());
@@ -63,11 +64,10 @@ public class Main extends PApplet {
         };
 
 
-
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true){
+                while (true) {
                     if (inString != null) {
                         valString = inString.split(",");
                         System.out.println("linea completa: " + inString);

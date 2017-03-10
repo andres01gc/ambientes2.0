@@ -1,16 +1,16 @@
 package root;
 
 import info.Info;
+import pantallas.Configuraciones;
 import pantallas.PantallaInicial;
 import processing.core.PApplet;
 
+import revisar.Configuration;
 import setup.AdministradorPantalla;
 
 public class Logica {
-
     private static int tipoJ;
     private static PApplet app;
-
 
     static public int getTipoJ() {
         return tipoJ;
@@ -19,7 +19,7 @@ public class Logica {
     public Logica(PApplet app) {
         this.app = app;
         Info.getInstance();
-        AdministradorPantalla.cambiarPantalla(new PantallaInicial());
+        AdministradorPantalla.cambiarPantalla(Configuration.pantallaInicial);
         AdministradorPantalla.getCurrentScreen().iniciar();
     }
 

@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import root.Logica;
 import root.Main;
+import setup.Pantalla;
 
 /**
  * Created by andre on 3/5/2017.
@@ -16,37 +17,29 @@ public class Jugador {
     PVector velocity;
     PVector acceleration;
     PApplet app = Logica.getApp();
-
+    PVector posFix = new PVector();
     float r;
     float maxforce;    // Maximum steering force
     float maxspeed;    // Maximum speed
 
 
     Jugador() {
-        location = new PVector();
+        location = new PVector(app.width / 2, 800);
         velocity = new PVector();
         acceleration = new PVector();
     }
 
+    public void pintar(int rango) {
 
-    public void pintar() {
-        app.stroke(0);
-        app.strokeWeight(5);
-
-
-        float bufferX = app.map(Main.valorFloats[1] + 17, -30, 30, -500, 500);
-
-        //  float bufferY = app.map(Main.valorFloats[1], );
-
-        float bufferY =
-                location.x = (app.width / 2) + bufferX;
-        location.y = 800;
-
+        location.x = app.mouseX;
+        app.noStroke();
         app.fill(app.random(255), app.random(255), app.random(255));
+
         if (Main.valorFloats != null) {
-            app.ellipse(location.x, location.y, 50, 50);
+            float bufferX = app.map(Main.valorFloats[1] + 17, -30, 30, -rango, rango);
+            // app.ellipse(location.x, location.y, 50, 50);
         } else {
-            //  app.ellipse(location.x, location.y, 50, 50);
+            app.ellipse(location.x, location.y, 50, 50);
         }
 
     }
@@ -74,7 +67,6 @@ public class Jugador {
 
 
     // This function implements Craig Reynolds' path following algorithm
-    // http://www.red3d.com/cwr/steer/PathFollow.html
     void follow(Path p) {
 
         // Predict location 25 (arbitrary choice) frames ahead
@@ -92,8 +84,8 @@ public class Jugador {
         for (int i = 0; i < p.points.size() - 1; i++) {
 
             // Look at a line segment
-            PVector a = p.points.get(i);
-            PVector b = p.points.get(i + 1);
+            PVector a = p.points.get(i).getPos();
+            PVector b = p.points.get(i + 1).getPos();
 
             // Get the normal point to that line
             PVector normalPoint = getNormalPoint(predictLoc, a, b);
@@ -144,15 +136,15 @@ public class Jugador {
         // Draw actual target (red if steering towards it)
         app.line(predictLoc.x, predictLoc.y, normal.x, normal.y);
 
-        if (worldRecord > p.radius) {
-            app.fill(255, 0, 0);
-            System.out.println("hasljdvaksjdvlajsdvlnajsdv");
-            app.ellipse(target.x, target.y, 100, 100);
+//        if (worldRecord > p.radius) {
+//            app.fill(255, 0, 0);
+//            System.out.println("hasljdvaksjdvlajsdvlnajsdv");
+//            app.ellipse(target.x, target.y, 100, 100);
+//
+//        }
 
-        }
-
-        app.noStroke();
-        app.ellipse(target.x, target.y, 100, 100);
+//        app.noStroke();
+//        app.ellipse(target.x, target.y, 100, 100);
 
     }
 
@@ -171,6 +163,22 @@ public class Jugador {
         return normalPoint;
     }
 
+
+    public void comprobar(Path p) {
+
+        boolean sale = false;
+        for (PVector pv : p.getPosicionesSalida()) {
+         //   app.ellipse(pv.x, pv.y, 50, 50);
+            if (app.dist(location.x, location.y, pv.x, pv.y) < 100) {
+                sale = true;
+                System.out.println("se sale");
+              //  break;
+            }
+
+        }
+
+
+    }
 
     public void applyForce(PVector force) {
         // We could add mass here if we want A = F / M
