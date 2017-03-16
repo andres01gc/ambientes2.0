@@ -7,7 +7,7 @@ import root.Logica;
 /**
  * Created by andre on 3/5/2017.
  */
-public class Enemigo {
+public class Obstaculo {
 
 
     private float rango;
@@ -27,39 +27,32 @@ public class Enemigo {
     private boolean m;
 
 
-    Enemigo(float x, float y, float rango) {
+    Obstaculo(float x, float y, float rango) {
         location = new PVector(x, y);
         velocity = new PVector();
         acceleration = new PVector();
-
         this.rango = rango;
         velX = app.random(5);
-
-
         if (app.random(1) < 0.3) {
             m = true;
         }
+        m = true;
     }
 
     public void pintar(float fixX) {
-
         app.pushMatrix();
-
-
+        app.rectMode(app.CENTER);
+        app.noStroke();
         app.translate(location.x + movx + fixX, location.y);
-        app.rotate(app.PI / 4);
+        //  app.rotate(app.PI / 4);
         // app.stroke(0, lifespan);
         /// app.strokeWeight(2);
-        app.ellipse(0, 0, 10, 10);
+        app.rect(0, 0, 60, 30, 1, 1, 1, 1);
         app.popMatrix();
-
     }
-
 
     public void mover(float vel) {
         location.y += vel;
-
-
         if (m) {
             if (movx > (rango / 2f) - velX) {
                 mov = false;
@@ -68,61 +61,41 @@ public class Enemigo {
                 movx = -(rango / 2f) + velX;
                 mov = true;
             }
-
             if (mov) movx += velX;
-
             if (!mov) movx -= velX;
-
         }
-        //   movx = rango/2;
-
-
     }
 
     //codigo de The nature of code
     void seek(PVector target) {
-
-
         PVector desired = PVector.sub(target, location);  // A vector pointing from the location to the target
-
         // If the magnitude of desired equals 0, skip out of here
         // (We could optimize this to check if x and y are 0 to avoid mag() square root
         if (desired.mag() == 0) return;
-
         // Normalize desired and scale to maximum speed
         desired.normalize();
         desired.mult(maxspeed);
         // Steering = Desired minus Velocity
         PVector steer = PVector.sub(desired, velocity);
         steer.limit(maxforce);  // Limit to maximum steering force
-
         applyForce(steer);
     }
-
-
     // This function implements Craig Reynolds' path following algorithm
     // http://www.red3d.com/cwr/steer/PathFollow.html
     void follow(Path p) {
-
         // Predict location 25 (arbitrary choice) frames ahead
-
         PVector predictLoc = location;
-
         // Now we must find the normal to the path from the predicted location
         // We look at the normal for each line segment and pick out the closest one
-
         /**/
         PVector normal = null;
         PVector target = null;
         float worldRecord = 1000000;  // Start with a very high record distance that can easily be beaten
-
         // Loop through all points of the path
         for (int i = 0; i < p.points.size() - 1; i++) {
-
             // Look at a line segment
             PVector a = p.points.get(i).getPos();
             PVector b = p.points.get(i + 1).getPos();
-
             // Get the normal point to that line
             PVector normalPoint = getNormalPoint(predictLoc, a, b);
             // This only works because we know our path goes from left to right

@@ -2,6 +2,7 @@ package revisar;
 
 import juego.PantallaJuego;
 import pantallas.Instrucciones;
+import pantallas.PantallaInicial;
 import processing.core.PApplet;
 import root.Logica;
 import setup.Pantalla;
@@ -24,6 +25,7 @@ public class Configuration {
     }
 
     public static void pantalla() {
+
 
     }
 

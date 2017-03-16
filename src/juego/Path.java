@@ -1,6 +1,6 @@
 package juego;
 
-import juego.Particle.Nodo;
+import juego.path.Nodo;
 import processing.core.PApplet;
 import processing.core.PVector;
 import root.Logica;
@@ -14,15 +14,16 @@ public class Path {
     PApplet app = Logica.getApp();
 
     ArrayList<Nodo> points;
-    PVector vel, acel;
-    private int tam = 300;
+    PVector acel;
+    public static PVector vel;
+    public int tam = 300;
     float radius = 1;
     private float t;
     private boolean mover;
     private float angle;
 
 
-    ArrayList<Enemigo> enemigos = new ArrayList<>();
+    ArrayList<Obstaculo> enemigos = new ArrayList<>();
     ArrayList<Moneda> monedas = new ArrayList<>();
 
     private ArrayList<PVector> posicionesSalida;
@@ -36,11 +37,10 @@ public class Path {
 
     public Path() {
         points = new ArrayList<>();
-        vel = new PVector(0, 10);
+        vel = new PVector(0, 2);
         acel = new PVector();
         t = app.random(10000);
     }
-
 
 //    public void iniHilo() {
 //        new Thread(new Runnable() {
@@ -73,38 +73,44 @@ public class Path {
 
     public void draw(int fixX) {
         app.noStroke();
-        app.fill(0, 50);
-        drawSombra(fixX - 40, rango + 10);
-        app.fill(24, 22, 30);
-        drawParticles(fixX, rango);
-        //  app.stroke(0);
-        drawForm(fixX, rango + 100);
-        update();
-        app.stroke(0);
-        app.noFill();
+        app.fill(80, 85, 127, 200);
         drawLine(fixX);
+        app.fill(80, 85, 127, 200);
+        drawParticles(fixX, rango);
+        app.fill(80, 85, 127, 200);
+        drawForm(fixX, rango + 100);
+
+        update();
+
 
         app.fill(255);
 
         drawEnemigos(fixX);
         drawMonedas(fixX);
+
+        for (int i = points.size() - 1; i > 0; i--) {
+            if (points.get(i).getPos().y > app.height + 200) points.remove(i);
+        }
+
+        vel.y += 0.01f;
+
+        //   System.out.println("points: " + points.size());
     }
 
     public void drawEnemigos(int posX) {
 
         for (int i = enemigos.size() - 1; i > 0; i--) {
-            Enemigo e = enemigos.get(i);
+            Obstaculo e = enemigos.get(i);
             e.pintar(posX);
             e.mover(vel.y);
 
             if (e.location.y > app.height + 100) {
-               // System.out.println("eleiminia enemigos");
+                // System.out.println("eleiminia enemigos");
 
                 enemigos.remove(e);
             }
         }
-        System.out.println("enemigos "+enemigos.size());
-
+        System.out.println("enemigos " + enemigos.size());
     }
 
     public void drawMonedas(int posX) {
@@ -117,7 +123,7 @@ public class Path {
                 if (e.location.y > app.height + 100) monedas.remove(e);
             }
         }
-         System.out.println("monedas "+monedas.size());
+        System.out.println("monedas " + monedas.size());
 
     }
 
@@ -134,7 +140,6 @@ public class Path {
     }
 
     private void drawSombra(int posX, int ancho) {
-
 
         for (Nodo v : points) {
             v.pintar(posX - (ancho / 2));
@@ -158,7 +163,7 @@ public class Path {
         for (Nodo v : points) {
             posicionesSalida.add(new PVector(v.getPos().x + newX - tam, v.getPos().y));
             posicionesSalida.add(new PVector(v.getPos().x + newX + tam, v.getPos().y));
-            app.vertex(v.getPos().x + newX, v.getPos().y);
+            // app.vertex(v.getPos().x + newX, v.getPos().y);
         }
 
 
@@ -227,7 +232,7 @@ public class Path {
 
 
             if (app.random(1) < 0.08) {
-                enemigos.add(new Enemigo(bufferX, -800f, rango));
+                enemigos.add(new Obstaculo(bufferX, -800f, rango));
             }
 
             if (app.random(1) < 0.08) {

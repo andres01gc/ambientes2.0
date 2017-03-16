@@ -25,16 +25,13 @@ public class Configuraciones extends Pantalla {
     @Override
     public void pintar() {
         app.background(36, 31, 45);
-
         app.fill(0);
-
         app.image(Info.getInstance().c1, app.map(app.noise(t + t + 7378), 0, 1, -vibra, vibra), app.map(app.noise(t + 457), 0, 1, -vibra, vibra));
         app.image(Info.getInstance().c2, 0, 0);
         app.image(Info.getInstance().c3, app.map(app.noise(t + 7828), 0, 1, -vibra, vibra), app.map(app.noise(t + 524), 0, 1, -vibra, vibra));
         pintarEngranes();
         update();
     }
-
 
     public void pintarEngranes() {
         app.imageMode(app.CENTER);

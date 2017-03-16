@@ -1,4 +1,4 @@
-package juego.Particle;
+package juego.path;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -12,25 +12,26 @@ import java.util.Iterator;
  */
 public class Nodo {
 
-
     PVector pos;
     private ArrayList<Particula> particles;
     PApplet app = Logica.getApp();
 
     public Nodo(PVector pos) {
+
         this.pos = pos;
         particles = new ArrayList<Particula>();
         int i = 0;
-        while (i < 20) {
+        while (i < 15) {
             particles.add(new Particula((int)app.random(255)));
             i++;
         }
+
+
     }
 
 
     public void pintar(int fixx) {
         PVector bufferPos = pos.copy();
-
         bufferPos.x += fixx;
         //   app.ellipse(pos.x + fixx, pos.y, 10, 10);
         Iterator<Particula> it = particles.iterator();
@@ -40,7 +41,6 @@ public class Nodo {
             p.display(bufferPos);
 
         }
-
 
     }
 

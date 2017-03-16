@@ -6,6 +6,7 @@ import pantallas.PantallaInicial;
 import processing.core.PApplet;
 
 import revisar.Configuration;
+import revisar.KinectLink;
 import setup.AdministradorPantalla;
 
 public class Logica {
@@ -18,6 +19,7 @@ public class Logica {
 
     public Logica(PApplet app) {
         this.app = app;
+        KinectLink.getInstance();
         Info.getInstance();
         AdministradorPantalla.cambiarPantalla(Configuration.pantallaInicial);
         AdministradorPantalla.getCurrentScreen().iniciar();

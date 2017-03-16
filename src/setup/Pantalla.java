@@ -2,6 +2,7 @@ package setup;
 
 import java.util.Observer;
 
+import pantallas.visualInterface.Hand;
 import processing.core.PApplet;
 
 /**
@@ -23,10 +24,29 @@ public abstract class Pantalla extends Thread {
 
     public abstract void finalizar();
 
+
+
     public void mousePressed() {
+
+
+    };
+
+
+    public void cargarMano() {
+        Hand.cargarMano(this);
     }
 
-    ;
+    public void pressHandRight() {
+
+
+    }
+
+
+    public void pintarHandRight() {
+        Hand.pintar();
+
+
+    }
 
     public void mouseDragged() {
     }

@@ -2,6 +2,7 @@ package root;
 
 import jssc.SerialPortList;
 import processing.core.PApplet;
+import revisar.KinectLink;
 import setup.Pantalla;
 import setup.ProcessingEvent;
 import processing.serial.*;
@@ -42,20 +43,18 @@ public class Main extends PApplet {
      */
 
     public void setup() {
-
         Pantalla.app = this;
         //	app = this;
         logica = new Logica(this);
+        //  escucharArduino();
     }
 
 
     public void escucharArduino() {
-        // size(400, 400);
-        frameRate(200);
+
         println(SerialPortList.getPortNames());
 
         valorFloats = null;
-
         myPort = new Serial(this, Serial.list()[0], 115200);
         myPort.bufferUntil('\n');
 
@@ -93,22 +92,13 @@ public class Main extends PApplet {
     }
 
     public void draw() {
-        background(255);
 
-//        if (inString != null) {
-//            valString = inString.split(",");
-//            System.out.println("linea completa: " + inString);
-//            System.out.println("strings " + valString[0] + "  " + valString[1] + "  " + valString[2] + "  ");
-//
-//            valorFloats = new float[]{
-//                    valorFloats[0] = Float.parseFloat(valString[0]),
-//                    valorFloats[1] = Float.parseFloat(valString[1]),
-//                    valorFloats[2] = Float.parseFloat(valString[2])
-//            };
-//
-//            System.out.println("float " + valorFloats[0] + "  " + valorFloats[1] + "  " + valorFloats[2] + "  ");
-//        }
+        background(255);
+        fill(255);
+
         logica.pintar();
+        text(frameRate, 50, 50);
+
     }
 
     public void mousePressed() {
@@ -141,5 +131,6 @@ public class Main extends PApplet {
 
     public void serialEvent(Serial myPort) {
         inString = myPort.readStringUntil('\n');
+        System.out.println("askdjvaskldjvasjklkdvnlaskjdvlasdvjsanllaskjnvlaskjdlasdnjkvn");
     }
 }

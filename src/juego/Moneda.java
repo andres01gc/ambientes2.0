@@ -13,6 +13,8 @@ public class Moneda {
     private float rango;
     // All the usual stuff
     PVector location;
+    PVector realPos = new PVector();
+
     PVector velocity;
     PVector acceleration;
     PApplet app = Logica.getApp();
@@ -35,20 +37,24 @@ public class Moneda {
         this.rango = rango;
         t = app.random(1000);
         velX = app.random(5);
-        location.x+= app.random(-rango/2,rango/2);
+        location.x += app.random(-rango / 2, rango / 2);
+    }
+
+    public PVector getRealPos() {
+        return realPos;
     }
 
     public void pintar(float fixX) {
+
+        realPos = new PVector(location.x + movx + fixX, location.y);
 
         app.fill(247, 199, 42);
         app.noStroke();
         app.pushMatrix();
         app.translate(location.x + movx + fixX, location.y);
-        //app.rotate(app.PI / 4);
-        // app.stroke(0, lifespan);
-        /// app.strokeWeight(2);
-        app.ellipse(0, 0,  app.sin(t)*20, 20);
+        app.ellipse(0, 0, app.sin(t) * 40, 40);
         app.popMatrix();
+        app.noFill();
 
 
         t += 0.1;

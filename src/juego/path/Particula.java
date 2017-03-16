@@ -1,4 +1,4 @@
-package juego.Particle;
+package juego.path;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -24,8 +24,6 @@ public class Particula {
 
     public Particula(int lifespan) {
         reiniciar();
-
-
     }
 
     void run() {
@@ -43,35 +41,33 @@ public class Particula {
 
         location.add(velocity);
 
-        lifespan -= 0.5f;
+        lifespan -= 1f;
     }
 
     // Method to display
     void display(PVector fixPos) {
+        //app.fill(0);
         app.noStroke();
-
         app.pushMatrix();
         app.translate(location.x + fixPos.x, location.y + fixPos.y);
         app.rotate(app.PI / 4);
-        // app.stroke(0, lifespan);
-        /// app.strokeWeight(2);
-        app.rect(0, 0, lifespan, lifespan);
-        app.popMatrix();
-        if (lifespan < 0.0)
-        reiniciar();
+        app.fill(80, 85, 127, 200);
 
+        app.ellipse(0, 0, lifespan, lifespan);
+        app.popMatrix();
+
+        if (lifespan < 0.0)
+            reiniciar();
 
     }
 
 
     public void reiniciar() {
-            acceleration = new PVector(0, 0.08f);
-            velocity = new PVector(app.random(-2, 2),0);
-            location = new PVector(app.random(-1, 1), (app.random(-100, 100)));
-            lifespan = (int) app.random(100);
-            tam = app.random(20, 60);
-
-
+        acceleration = new PVector(0, 0.08f);
+        velocity = new PVector(app.random(-2, 2), 0);
+        location = new PVector(app.random(-1, 1), (app.random(-100, 100)));
+        lifespan = (int) app.random(100);
+        tam = app.random(20, 60);
     }
 
     // Is the particle still useful?
