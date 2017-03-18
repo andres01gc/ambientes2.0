@@ -20,6 +20,8 @@ public class RastroParticula {
 
     public float tam = 0;
     private boolean muerto;
+
+    int r, g, b;
 //    private PVector vel;
 
     public RastroParticula() {
@@ -27,12 +29,18 @@ public class RastroParticula {
         location = new PVector(app.random(-20, 20) + Jugador.location.x, Jugador.location.y);
         lifespan = (int) app.random(10, 30);
         //     tam = app.random(20, 500);
-        opacity = app.random(50, 255);
+        opacity = app.random(50, 400);
+
+        r = 255;
+        g = (int) app.random(64, 192);
+        b = (int) app.random(34, 64);
+
+        //color = app.color(255, 192, 34);
     }
 
     public RastroParticula(int lifespan, PVector loc) {
         acceleration = new PVector(0, 0.08f);
-        location = new PVector(app.random(-20, 20) + Jugador.location.x, Jugador.location.y);
+        location = new PVector(app.random(-20, 20) + Jugador.location.x, Jugador.location.y+app.random(-20, 20));
         lifespan = (int) app.random(20, 50);
         //   tam = app.random(20, 500);
         this.location = loc;
@@ -62,7 +70,7 @@ public class RastroParticula {
 
         // app.stroke(0, lifespan);
         /// app.strokeWeight(2);
-        app.fill(255, opacity);
+        app.fill(r, g, b, opacity);
         app.ellipse(0, 0, lifespan, lifespan);
         app.popMatrix();
 

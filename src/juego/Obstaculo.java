@@ -1,8 +1,12 @@
 package juego;
 
+import info.Info;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 import root.Logica;
+
+import java.util.Random;
 
 /**
  * Created by andre on 3/5/2017.
@@ -26,6 +30,14 @@ public class Obstaculo {
     private float velX = 2;
     private boolean m;
 
+    PImage imaEnemigo;
+
+    private PVector realPos = new PVector();
+
+    public PVector getRealPos() {
+
+        return realPos;
+    }
 
     Obstaculo(float x, float y, float rango) {
         location = new PVector(x, y);
@@ -37,17 +49,25 @@ public class Obstaculo {
             m = true;
         }
         m = true;
+
+        int tipoEnemigo = (int) app.random(0, 3);
+        imaEnemigo = Info.getInstance().obstaculos[tipoEnemigo];
     }
 
     public void pintar(float fixX) {
+
+        realPos.x = location.x + movx + fixX;
+        realPos.y = location.y;
+
         app.pushMatrix();
-        app.rectMode(app.CENTER);
+        app.imageMode(app.CENTER);
         app.noStroke();
         app.translate(location.x + movx + fixX, location.y);
         //  app.rotate(app.PI / 4);
         // app.stroke(0, lifespan);
         /// app.strokeWeight(2);
-        app.rect(0, 0, 60, 30, 1, 1, 1, 1);
+        app.image(imaEnemigo, 0, 0);
+        //pp.rect(0, 0, 60, 30, 1, 1, 1, 1);
         app.popMatrix();
     }
 
@@ -80,6 +100,7 @@ public class Obstaculo {
         steer.limit(maxforce);  // Limit to maximum steering force
         applyForce(steer);
     }
+
     // This function implements Craig Reynolds' path following algorithm
     // http://www.red3d.com/cwr/steer/PathFollow.html
     void follow(Path p) {

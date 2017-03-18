@@ -23,7 +23,6 @@ public class Rastro {
         this.pos = pos;
         particles = new ArrayList<RastroParticula>();
         int i = 0;
-
     }
 
 
@@ -41,6 +40,7 @@ public class Rastro {
         }
 
         // if (app.frameCount % 1 == 0)
+        particles.add(new RastroParticula());
         particles.add(new RastroParticula());
         particles.add(new RastroParticula());
 

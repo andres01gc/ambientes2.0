@@ -34,6 +34,8 @@ public class Info {
     public PImage inst1;
     public PImage inst2;
 
+    public PImage[] obstaculos;
+
     public void loadInicio() {
         ima1 = app.loadImage("../data/resources/pantallaInicial/1.png");
         ima2 = app.loadImage("../data/resources/pantallaInicial/2.png");
@@ -80,6 +82,7 @@ public class Info {
         PLAYER = app.loadImage("");
     }
 
+
     public static Info getInstance() {
         if (info == null) {
             info = new Info();
@@ -93,6 +96,18 @@ public class Info {
         inst1 = app.loadImage("../data/resources/instrucciones/28.png");
         inst2 = app.loadImage("../data/resources/instrucciones/29.png");
 
+
+    }
+
+
+    public void cargarObstaculos() {
+        obstaculos = new PImage[]{
+                app.loadImage("../data/resources/juego/enemigos/ene1.png"),
+                app.loadImage("../data/resources/juego/enemigos/ene2.png"),
+                app.loadImage("../data/resources/juego/enemigos/ene3.png"),
+                app.loadImage("../data/resources/juego/enemigos/ene4.png"),
+
+        };
 
     }
 }

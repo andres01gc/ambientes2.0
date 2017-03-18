@@ -46,7 +46,8 @@ public class Main extends PApplet {
         Pantalla.app = this;
         //	app = this;
         logica = new Logica(this);
-        //  escucharArduino();
+        escucharArduino();
+        textFont(createFont("../data/resources/fuente.otf", 200));
     }
 
 
@@ -92,12 +93,11 @@ public class Main extends PApplet {
     }
 
     public void draw() {
-
         background(255);
         fill(255);
 
         logica.pintar();
-        text(frameRate, 50, 50);
+        // text(frameRate, 50, 50);
 
     }
 
@@ -131,6 +131,5 @@ public class Main extends PApplet {
 
     public void serialEvent(Serial myPort) {
         inString = myPort.readStringUntil('\n');
-        System.out.println("askdjvaskldjvasjklkdvnlaskjdvlasdvjsanllaskjnvlaskjdlasdnjkvn");
     }
 }

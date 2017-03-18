@@ -23,8 +23,9 @@ public class Path {
     private float angle;
 
 
-    ArrayList<Obstaculo> enemigos = new ArrayList<>();
+   ArrayList<Obstaculo> enemigos = new ArrayList<>();
     ArrayList<Moneda> monedas = new ArrayList<>();
+    ArrayList<Gasolina> gasolinas = new ArrayList<>();
 
     private ArrayList<PVector> posicionesSalida;
     private int rango = 400;
@@ -73,11 +74,11 @@ public class Path {
 
     public void draw(int fixX) {
         app.noStroke();
-        app.fill(80, 85, 127, 200);
+        app.fill(80, 85, 127 );
         drawLine(fixX);
-        app.fill(80, 85, 127, 200);
+        app.fill(80, 85, 127 );
         drawParticles(fixX, rango);
-        app.fill(80, 85, 127, 200);
+        app.fill(80, 85, 127 );
         drawForm(fixX, rango + 100);
 
         update();
@@ -87,6 +88,8 @@ public class Path {
 
         drawEnemigos(fixX);
         drawMonedas(fixX);
+        drawGasolina(fixX);
+
 
         for (int i = points.size() - 1; i > 0; i--) {
             if (points.get(i).getPos().y > app.height + 200) points.remove(i);
@@ -96,6 +99,22 @@ public class Path {
 
         //   System.out.println("points: " + points.size());
     }
+
+    private void drawGasolina(int fixX) {
+
+        for (int i = gasolinas.size() - 1; i > 0; i--) {
+            Gasolina e = gasolinas.get(i);
+            e.pintar(fixX);
+            e.mover(vel.y);
+
+            if (e.location.y > app.height + 100) {
+                gasolinas.remove(e);
+            }
+        }
+     //   System.out.println("enemigos " + gasolinas.size());
+
+    }
+
 
     public void drawEnemigos(int posX) {
 
@@ -110,7 +129,7 @@ public class Path {
                 enemigos.remove(e);
             }
         }
-        System.out.println("enemigos " + enemigos.size());
+      //  System.out.println("enemigos " + enemigos.size());
     }
 
     public void drawMonedas(int posX) {
@@ -123,7 +142,7 @@ public class Path {
                 if (e.location.y > app.height + 100) monedas.remove(e);
             }
         }
-        System.out.println("monedas " + monedas.size());
+      //  System.out.println("monedas " + monedas.size());
 
     }
 
@@ -238,6 +257,11 @@ public class Path {
             if (app.random(1) < 0.08) {
                 monedas.add(new Moneda(bufferX, -800f, rango));
             }
+
+            if (app.random(1) < 0.02) {
+                gasolinas.add(new Gasolina(bufferX, -800f, rango));
+            }
+
         }
         t += 0.01;
     }

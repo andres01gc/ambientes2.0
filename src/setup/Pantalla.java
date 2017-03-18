@@ -25,11 +25,12 @@ public abstract class Pantalla extends Thread {
     public abstract void finalizar();
 
 
-
     public void mousePressed() {
 
 
-    };
+    }
+
+    ;
 
 
     public void cargarMano() {
@@ -38,14 +39,11 @@ public abstract class Pantalla extends Thread {
 
     public void pressHandRight() {
 
-
     }
 
 
     public void pintarHandRight() {
         Hand.pintar();
-
-
     }
 
     public void mouseDragged() {
@@ -59,13 +57,11 @@ public abstract class Pantalla extends Thread {
     ;
 
     public void KeyPressed() {
+
+
     }
 
     ;
 
-    public void serialEvent() {
-
-
-    }
 
 }
