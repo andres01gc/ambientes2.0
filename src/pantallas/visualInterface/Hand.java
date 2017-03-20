@@ -21,7 +21,8 @@ public class Hand {
     }
 
     public static void pintar() {
-
+pos.x=app.mouseX;
+pos.y=app.mouseY;
         app.fill(255, 50);
         app.noStroke();
         int radio = 50;

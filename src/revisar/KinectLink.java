@@ -461,7 +461,6 @@ Different hand state
 
     }
 
-
     public void startRec() {
         new Thread(new Runnable() {
             @Override

@@ -17,24 +17,21 @@ public class Info {
     public PImage perfil1;
     public PImage perfil2;
     public PImage perfil3;
-
     public PImage pp1;
-
     public PImage pp2;
-
     public PImage pp3;
-
     public PImage level1;
     public PImage level2;
     public PImage level3;
     public PImage level4;
-
     public PImage onF;
     public PImage onL;
     public PImage inst1;
     public PImage inst2;
 
     public PImage[] obstaculos;
+    public PImage ij4, ij3, ij2, ij1;
+    public PImage insJ1, insJ2, insJ3;
 
     public void loadInicio() {
         ima1 = app.loadImage("../data/resources/pantallaInicial/1.png");
@@ -78,6 +75,20 @@ public class Info {
     }
 
 
+    public void loadInstruccionesJuego() {
+        insJ1 = app.loadImage("../data/resources/instruccionesJuego/32.png");
+        insJ2 = app.loadImage("../data/resources/instruccionesJuego/33.png");
+        insJ3 = app.loadImage("../data/resources/instruccionesJuego/34.png");
+    }
+
+
+    public void loadInicioJuego() {
+        ij1 = app.loadImage("../data/resources/inicioJuego/28.png");
+        ij2 = app.loadImage("../data/resources/inicioJuego/29.png");
+        ij3 = app.loadImage("../data/resources/inicioJuego/30.png");
+        ij4 = app.loadImage("../data/resources/inicioJuego/31.png");
+    }
+
     private Info() {
         PLAYER = app.loadImage("");
     }
@@ -87,7 +98,6 @@ public class Info {
         if (info == null) {
             info = new Info();
         }
-
         return info;
     }
 

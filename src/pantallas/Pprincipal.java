@@ -38,8 +38,8 @@ public class Pprincipal extends Pantalla {
     public void pressHandRight() {
         if (app.dist(Hand.pos.x, Hand.pos.y, 965, 637) < 150) {
             app.image(Info.getInstance().pp2, app.map(app.noise(t + t + 7378), 0, 1, -vibra, vibra), app.map(app.noise(t + t + 7378), 0, 1, -vibra, vibra));
-            if (app.mousePressed) AdministradorPantalla.cambiarPantalla(new Niveles());
-        }
+        }           AdministradorPantalla.cambiarPantalla(new Niveles());
+
 
 
     }

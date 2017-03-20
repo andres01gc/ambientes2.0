@@ -46,7 +46,7 @@ public class Main extends PApplet {
         Pantalla.app = this;
         //	app = this;
         logica = new Logica(this);
-      //  escucharArduino();
+        //  escucharArduino();
         textFont(createFont("../data/resources/fuente.otf", 200));
     }
 
@@ -62,7 +62,6 @@ public class Main extends PApplet {
         valorFloats = new float[]{
                 0, 0, 0
         };
-
 
         new Thread(new Runnable() {
             @Override

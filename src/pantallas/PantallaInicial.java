@@ -36,6 +36,7 @@ public class PantallaInicial extends Pantalla {
         if (app.dist(Hand.pos.x, Hand.pos.y, 1623, 943) < 300) {
             app.image(Info.getInstance().ima4, app.map(app.noise(t + t + 624), 0, 1, -vibra, vibra), app.map(app.noise(t + 6998), 0, 1, -vibra, vibra));
             cargarMano();
+
         }
 
         //kl.drawSkeleton();

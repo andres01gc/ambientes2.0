@@ -28,18 +28,26 @@ public class Niveles extends Pantalla {
 
         if (app.dist(app.mouseX, app.mouseY, 583, 592) < 300) {
             app.image(Info.getInstance().level4, app.map(app.noise(t + 594), 0, 1, -vibra, vibra), app.map(app.noise(t + 956), 0, 1, -vibra, vibra));
-            if (app.mousePressed) {
-                AdministradorPantalla.cambiarPantalla(new PantallaJuego());
-            }
-
+            cargarMano();
         }
+
         app.image(Info.getInstance().level3, 0, 0);
         t += 0.01;
+
+        pintarHandRight();
     }
 
     @Override
     public void finalizar() {
 
 
+    }
+
+    @Override
+    public void pressHandRight() {
+        if (app.dist(app.mouseX, app.mouseY, 583, 592) < 300) {
+            app.image(Info.getInstance().level4, app.map(app.noise(t + 594), 0, 1, -vibra, vibra), app.map(app.noise(t + 956), 0, 1, -vibra, vibra));
+            AdministradorPantalla.cambiarPantalla(new PresentacionJuego());
+        }
     }
 }
