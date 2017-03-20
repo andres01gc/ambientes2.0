@@ -1,6 +1,6 @@
 package juego;
 
-import juego.rastro.Rastro;
+import juego.particles.rastro.Rastro;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -12,7 +12,6 @@ import root.Main;
  */
 
 public class Jugador {
-
     // All the usual stuff
     public static PVector location;
     PVector velocity;
@@ -26,10 +25,11 @@ public class Jugador {
 
     Rastro r;
     PImage image;
+
     private boolean fuera;
 
-    public boolean isFuera() {
 
+    public boolean isFuera() {
         return fuera;
     }
 
@@ -50,36 +50,35 @@ public class Jugador {
     public void pintar(int rango, boolean sentadilla) {
         r.pintar();
 
-        velocity.y = 2;
+        velocity.y = 0.2f;
 
         app.noStroke();
 
-        if (sentadilla) {
-            app.fill(255, 0, 0, 150);
-        } else {
-            app.fill(255, 150);
-        }
 
-        // location.x = app.pmouseX;
+        location.x = app.mouseX;
+        acceleration.x = app.map(app.mouseX - app.pmouseX, -100, 100, 1, -1);
+
+
         app.pushMatrix();
         app.translate(location.x, location.y);
         app.rotate(velocity.heading() - app.PI / 2);
         app.imageMode(app.CENTER);
 
-        if (Main.valorFloats != null) {
-            float bufferX = app.map(Main.valorFloats[1], -30, 30, -rango, rango);
-            //   velocity.x = app.map(bufferX, -30, 30, 10, -10);
+        if (sentadilla) {
+            //         image = image;
+        } else {
+            //         image = image;
+        }
 
-            location.x = (1920 / 2) + bufferX;
+        if (Main.valorFloats != null) {
+            //  float bufferX = app.map(Main.valorFloats[1], -30, 30, -rango, rango);
+            //location.x = (1920 / 2) + bufferX;
             app.image(image, 0, -30);
         } else {
             app.image(image, 0, -30);
         }
-
         app.popMatrix();
-
-
-        velocity.add(acceleration);
+        velocity.x = acceleration.x;
         acceleration.mult(0);
     }
 
@@ -89,11 +88,10 @@ public class Jugador {
 
     }
 
-
     public void comprobar(Path p) {
         fuera = false;
         for (PVector pv : p.getPosicionesSalida()) {
-            app.ellipse(pv.x, pv.y, 50, 0);
+               // app.ellipse(pv.x, pv.y, 100, 100);
             if (app.dist(location.x, location.y, pv.x, pv.y) < 100) {
                 fuera = true;
                 //  System.out.println("se fuera");

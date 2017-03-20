@@ -1,4 +1,4 @@
-package juego.rastro;
+package juego.particles.rastro;
 
 import juego.Jugador;
 import juego.Path;

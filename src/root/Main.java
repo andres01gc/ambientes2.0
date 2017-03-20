@@ -46,7 +46,7 @@ public class Main extends PApplet {
         Pantalla.app = this;
         //	app = this;
         logica = new Logica(this);
-        escucharArduino();
+      //  escucharArduino();
         textFont(createFont("../data/resources/fuente.otf", 200));
     }
 

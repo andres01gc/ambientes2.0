@@ -1,4 +1,4 @@
-package juego.rastro;
+package juego.particles.rastro;
 
 import processing.core.PApplet;
 import processing.core.PVector;

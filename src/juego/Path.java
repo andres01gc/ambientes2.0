@@ -1,6 +1,6 @@
 package juego;
 
-import juego.path.Nodo;
+import juego.particles.path.Nodo;
 import processing.core.PApplet;
 import processing.core.PVector;
 import root.Logica;
@@ -23,12 +23,12 @@ public class Path {
     private float angle;
 
 
-   ArrayList<Obstaculo> enemigos = new ArrayList<>();
+    ArrayList<Obstaculo> enemigos = new ArrayList<>();
     ArrayList<Moneda> monedas = new ArrayList<>();
     ArrayList<Gasolina> gasolinas = new ArrayList<>();
 
     private ArrayList<PVector> posicionesSalida;
-    private int rango = 400;
+    private int rango = 600;
 
 
     public ArrayList<PVector> getPosicionesSalida() {
@@ -38,9 +38,10 @@ public class Path {
 
     public Path() {
         points = new ArrayList<>();
-        vel = new PVector(0, 2);
+        vel = new PVector(0, 1);
         acel = new PVector();
         t = app.random(10000);
+        startCamino();
     }
 
 //    public void iniHilo() {
@@ -74,11 +75,11 @@ public class Path {
 
     public void draw(int fixX) {
         app.noStroke();
-        app.fill(80, 85, 127 );
+        app.fill(80, 85, 127);
         drawLine(fixX);
-        app.fill(80, 85, 127 );
+        app.fill(80, 85, 127);
         drawParticles(fixX, rango);
-        app.fill(80, 85, 127 );
+        app.fill(80, 85, 127);
         drawForm(fixX, rango + 100);
 
         update();
@@ -111,7 +112,7 @@ public class Path {
                 gasolinas.remove(e);
             }
         }
-     //   System.out.println("enemigos " + gasolinas.size());
+        //   System.out.println("enemigos " + gasolinas.size());
 
     }
 
@@ -129,7 +130,7 @@ public class Path {
                 enemigos.remove(e);
             }
         }
-      //  System.out.println("enemigos " + enemigos.size());
+        //  System.out.println("enemigos " + enemigos.size());
     }
 
     public void drawMonedas(int posX) {
@@ -142,7 +143,7 @@ public class Path {
                 if (e.location.y > app.height + 100) monedas.remove(e);
             }
         }
-      //  System.out.println("monedas " + monedas.size());
+        //  System.out.println("monedas " + monedas.size());
 
     }
 
@@ -166,7 +167,6 @@ public class Path {
 
         for (Nodo v : points) {
             v.pintar(posX + (ancho / 2));
-            posicionesSalida.add(new PVector(posX + (ancho / 2), v.getPos().y));
 
         }
 
@@ -179,9 +179,11 @@ public class Path {
         app.beginShape();
 
         app.stroke(255);
+
+        int fix = 100;
         for (Nodo v : points) {
-            posicionesSalida.add(new PVector(v.getPos().x + newX - tam, v.getPos().y));
-            posicionesSalida.add(new PVector(v.getPos().x + newX + tam, v.getPos().y));
+            posicionesSalida.add(new PVector(v.getPos().x + newX - tam - fix, v.getPos().y));
+            posicionesSalida.add(new PVector(v.getPos().x + newX + tam + fix, v.getPos().y));
             // app.vertex(v.getPos().x + newX, v.getPos().y);
         }
 
@@ -242,6 +244,35 @@ public class Path {
     }
 
 
+
+
+    public void startCamino() {
+        // updateData(vel.y);
+        int tam = 300;
+        int i = 0;
+        while (i < 1920) {
+            float bufferX = app.map(app.noise(t), 0, 1, -tam, tam);
+            addPoint(bufferX, 1080 - i);
+            i += 70;
+            t += 0.01 * 5;
+        }
+    }
+
+
+    public void updateLine(float vel) {
+        for (Nodo v : points) {
+            if (mover) {
+                v.getPos().y += vel;
+            }
+        }
+
+
+    }
+
+    public void mover() {
+        mover = true;
+    }
+
     public void update() {
         updateData(vel.y);
         int tam = 400;
@@ -263,21 +294,10 @@ public class Path {
             }
 
         }
-        t += 0.01;
+
+
+        t += 0.006f;
     }
 
 
-    public void updateLine(float vel) {
-        for (Nodo v : points) {
-            if (mover) {
-                v.getPos().y += vel;
-            }
-        }
-
-
-    }
-
-    public void mover() {
-        mover = true;
-    }
 }

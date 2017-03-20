@@ -27,6 +27,7 @@ public class Moneda {
     private float movx = 0;
     private float velX = 2;
     private float t;
+    private float tam;
 
 
     Moneda(float x, float y, float rango) {
@@ -38,7 +39,14 @@ public class Moneda {
         t = app.random(1000);
         velX = app.random(5);
         location.x += app.random(-rango / 2, rango / 2);
+        tam = 40;
     }
+
+
+    public float getTam() {
+        return tam;
+    }
+
 
     public PVector getRealPos() {
         return realPos;
@@ -48,38 +56,26 @@ public class Moneda {
 
         realPos = new PVector(location.x + movx + fixX, location.y);
 
-        app.fill(247, 199, 42);
-        app.noStroke();
+
+        app.strokeWeight(5);
         app.pushMatrix();
         app.translate(location.x + movx + fixX, location.y);
-        app.ellipse(0, 0, app.sin(t) * 40, 40);
+
+        app.fill(0, 20);
+        app.stroke(0, 20);
+        app.ellipse(0, tam - 30, app.sin(t) * tam, tam / 6);
+
+        app.fill(247, 199, 42);
+        app.stroke(247, 199, 42);
+        app.ellipse(0, 0, app.sin(t) * tam, tam);
+
         app.popMatrix();
         app.noFill();
-
-
         t += 0.1;
     }
 
-
     public void mover(float vel) {
         location.y += vel;
-
-//        if (movx > (rango/2f)- velX) {
-//            mov = false;
-//            movx = (rango/2f) - velX;
-//        } else if (movx < -(rango/2f) + velX) {
-//            movx = -(rango/2f) + velX;
-//            mov = true;
-//        }
-//
-//        if (mov) movx += velX;
-//
-//        if (!mov) movx -= velX;
-//
-//
-//     //   movx = rango/2;
-
-
     }
 
 

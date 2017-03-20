@@ -25,6 +25,7 @@ public class Estrella {
 
 
     public void pintar() {
+        app.noStroke();
         app.fill(255, 100);
         app.pushMatrix();
         app.translate(pos.x, pos.y);

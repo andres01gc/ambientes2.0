@@ -1,4 +1,4 @@
-package juego.path;
+package juego.particles.path;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -21,8 +21,8 @@ public class Nodo {
         this.pos = pos;
         particles = new ArrayList<Particula>();
         int i = 0;
-        while (i < 15) {
-            particles.add(new Particula((int)app.random(255)));
+        while (i < 30) {
+            particles.add(new Particula((int)app.random(350)));
             i++;
         }
 

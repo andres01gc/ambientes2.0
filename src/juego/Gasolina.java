@@ -26,6 +26,7 @@ public class Gasolina {
     private float movx = 0;
     private float velX = 2;
     private float t;
+    private float angle;
 
     Gasolina(float x, float y, float rango) {
         location = new PVector(x, y);
@@ -46,11 +47,34 @@ public class Gasolina {
 
         realPos = new PVector(location.x + movx + fixX, location.y);
 
-        app.fill(255, 0, 42);
-        app.noStroke();
+        app.stroke(62, 206, 27, 100);
+        app.strokeWeight(3);
+        app.noFill();
         app.pushMatrix();
+        int i = 0;
         app.translate(location.x + movx + fixX, location.y);
+        //    while (i< 2) {
+        app.rotate(angle);
         app.ellipse(0, 0, app.sin(t) * 40, 40);
+
+        app.ellipse(-2 + (app.noise(t + 145) * 4), -2 + (app.noise(t + 91896) * 4), 5, 5);
+
+
+        app.rotate(.5f);
+        //app.ellipse(app.sin(t + 200) * 20, app.sin(t + 200) * 20, 10, 10);
+        app.ellipse(0, 0, 40, app.sin(t + 200) * 40);
+        app.rotate(.5f);
+        //app.ellipse(app.sin(t + 4900) * 30, app.sin(t + 4900) * 30, 10, 10);
+
+        app.ellipse(0, 0, 60, app.sin(t + 4900) * 60);
+        app.rotate(.5f);
+        //  app.ellipse(app.sin(t + 200) * 10, app.sin(t + 200) * 10, 10, 10);
+
+        app.ellipse(0, 0, 20, app.sin(t + 514) * 20);
+
+        angle += 0.03f;
+        // }
+
         app.popMatrix();
         app.noFill();
         t += 0.1f;

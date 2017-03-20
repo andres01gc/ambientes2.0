@@ -20,7 +20,6 @@ public class Hand {
 
     }
 
-
     public static void pintar() {
 
         app.fill(255, 50);
@@ -30,14 +29,7 @@ public class Hand {
         synchronized (pos) {
             app.ellipse(pos.x, pos.y, radio, radio);
         }
-//        app.beginShape();
-//        for (float i = 0; i < app.TWO_PI; i += 0.1f) {
-//            float nx = app.mouseX + app.cos(i) * radio;
-//            float ny = app.mouseY + app.sin(i) * radio;
-//
-//            app.vertex(nx, ny);
-//        }
-//        app.endShape(app.CLOSE);
+
     }
 
     public static void cargarMano(Pantalla p) {

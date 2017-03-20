@@ -1,4 +1,4 @@
-package juego.path;
+package juego.particles.moneda;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -7,23 +7,24 @@ import root.Logica;
 /**
  * Created by andre on 3/10/2017.
  */
-public class Particula {
+public class ParticulaMoneda {
 
     PVector location;
     PVector velocity;
     PVector acceleration;
+    boolean muerto;
     float lifespan;
     PApplet app = Logica.getApp();
 
 
     public float tam = 0;
 
-    public Particula() {
-        reiniciar();
-    }
-
-    public Particula(int lifespan) {
-        reiniciar();
+    public ParticulaMoneda(PVector pos, int lifespan) {
+        acceleration = new PVector(app.random(-2, 2), app.random(-2, 2));
+        velocity = acceleration.copy();
+        location = new PVector(pos.x + app.random(-20, 20), pos.y, app.random(-20, 20));
+        this.lifespan = lifespan;
+        tam = app.random(5, 10);
     }
 
     void run() {
@@ -33,42 +34,32 @@ public class Particula {
 
     // Method to update location
     void update() {
-
-        velocity.x += acceleration.x;
-        // velocity.y+= acceleration.y;
-
-        // velocity.add(acceleration);
-
+        velocity.add(acceleration);
         location.add(velocity);
-
         lifespan -= 1f;
     }
 
     // Method to display
-    void display(PVector fixPos) {
+    void display() {
         //app.fill(0);
         app.noStroke();
         app.pushMatrix();
-        app.translate(location.x + fixPos.x, location.y + fixPos.y);
+        app.translate(location.x, location.y);
         app.rotate(app.PI / 4);
-        app.fill(80, 85, 127, 200);
 
-        app.ellipse(0, 0, lifespan, lifespan);
+        app.fill(247, 199, 42, lifespan+150);
+        app.ellipse(0, 0, tam, tam);
+
         app.popMatrix();
 
-        if (lifespan < 0.0)
-            reiniciar();
+        if (lifespan < 0.0) muerto = true;
 
     }
 
-
-    public void reiniciar() {
-        acceleration = new PVector(0, 0.08f);
-        velocity = new PVector(app.random(-2, 2), 0);
-        location = new PVector(app.random(-1, 1), (app.random(-100, 100)));
-        lifespan = (int) app.random(100);
-        tam = app.random(20, 60);
+    public boolean isMuerto() {
+        return muerto;
     }
+
 
     // Is the particle still useful?
     boolean isDead() {
