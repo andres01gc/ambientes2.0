@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public class AnimaGasolina {
 
+    private final int puntos;
     PVector pos;
     private ArrayList<ParticulaGasolina> particles;
     PApplet app = Logica.getApp();
@@ -26,7 +27,7 @@ public class AnimaGasolina {
     float t = 255;
 
     public AnimaGasolina(int puntosM, Gasolina ga) {
-        this.pos = ga.getRealPos().copy();
+this.puntos= puntosM;        this.pos = ga.getRealPos().copy();
         particles = new ArrayList<ParticulaGasolina>();
 
         resps = new String[]{
@@ -41,7 +42,7 @@ public class AnimaGasolina {
 
         int i = 0;
 
-        while (i < 30) {
+        while (i < 10) {
             particles.add(new ParticulaGasolina(pos.copy(), (int) app.random(10, 50)));
             i++;
         }
@@ -71,7 +72,7 @@ public class AnimaGasolina {
         app.textSize(sizeText);
         app.strokeWeight(3);
 
-        app.text("+5", 0, 0);
+        app.text("+"+puntos, 0, 0);
         pos.y += 2;
         app.popMatrix();
 

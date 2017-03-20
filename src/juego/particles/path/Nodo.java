@@ -21,12 +21,10 @@ public class Nodo {
         this.pos = pos;
         particles = new ArrayList<Particula>();
         int i = 0;
-        while (i < 30) {
+        while (i < 40) {
             particles.add(new Particula((int)app.random(350)));
             i++;
         }
-
-
     }
 
 

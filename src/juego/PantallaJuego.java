@@ -7,6 +7,7 @@ import juego.particles.gasolina.AnimaGasolina;
 import juego.particles.moneda.AnimacionMonedaCogida;
 import juego.sky.Sky;
 import processing.core.PImage;
+import processing.core.PVector;
 import setup.Pantalla;
 
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ public class PantallaJuego extends Pantalla {
     private PImage fondo0, fondo1;
     private boolean inicioJuego = false;
     public Sky sky;
-    private float vibra = 3;
+    private float vibra = 5;
     private float tt;
     private float t;
-    private int pantalla = 2;
+    private int pantalla = 1;
     private ArrayList<AnimacionMonedaCogida> particlesMoneda = new ArrayList<AnimacionMonedaCogida>();
     private ArrayList<AnimaGasolina> particlesG = new ArrayList<AnimaGasolina>();
 
@@ -51,8 +52,21 @@ public class PantallaJuego extends Pantalla {
 
     public void fondo() {
         if (j.isFuera()) {
+            app.textSize(60);
             app.background(232, 12, 59);
+            app.fill(255);
+            app.pushMatrix();
+            app.translate(379, 136);
+            app.rotate(app.random(-.1f, .1f));
+            app.textAlign(app.CENTER, app.CENTER);
+
+            app.text("-1!", app.random(-3, 3), app.random(-3, 3));
+            if (app.frameCount % 10 == 0)
+                nivelGasolina -= 1;
+            app.popMatrix();
+
         } else {
+
             app.background(51, 51, 86);
         }
         sky.pintar();
@@ -71,9 +85,8 @@ public class PantallaJuego extends Pantalla {
         app.text(puntaje, 1801, 120);
         nivelGasolina = app.constrain(nivelGasolina, -1, 100);
 
-        if (nivelGasolina == 0) {
-            pantalla++;
-        }
+
+
     }
 
     public void pintarBarraEnergia() {
@@ -84,7 +97,7 @@ public class PantallaJuego extends Pantalla {
             app.fill(247, 199, 42, 200);
         }
 
-        float tam = app.map(nivelGasolina, 0, 100, 0, 370);
+        float tam = app.map(nivelGasolina, 0, 100, 0, 360);
         app.rect(-2 + app.map(app.noise(tt + tt + 951), 0, 1, -vibra, vibra), 105 + app.map(app.noise(tt + tt + 183), 0, 1, -vibra, vibra), tam, 62, 6, 6, 6, 6);
 
     }
@@ -175,10 +188,26 @@ public class PantallaJuego extends Pantalla {
 
 
     public void update() {
-
         if (app.frameCount % 20 == 0) {
             nivelGasolina--;
+            puntaje += Path.vel.mag()/4;
         }
+
+
+        if(nivelGasolina < 20){
+            app.textAlign(app.CENTER, app.CENTER);
+            app.fill(255,200);
+            app.textSize(50);
+            app.text("Combustible bajo!",1920/2,1000);
+        }
+
+        if (nivelGasolina == 0) {
+            pantalla++;
+            ///dejar de guardar!
+            //guardar datos importantes al final de la partida.
+
+        }
+
     }
 
     public void detectarMonedas() {
@@ -200,8 +229,6 @@ public class PantallaJuego extends Pantalla {
                 }
             }
         }
-
-
     }
 
     public void detectarGasolina() {
@@ -211,8 +238,8 @@ public class PantallaJuego extends Pantalla {
             if (app.dist(g.get(i).getRealPos().x, g.get(i).getRealPos().y, j.getLocation().x, j.getLocation().y) < 70) {
                 if (/*k.isSentadilla()*/true) {
 
-                    nivelGasolina += 5;
-                    particlesG.add(new AnimaGasolina(50, g.get(i)));
+                    nivelGasolina += 10;
+                    particlesG.add(new AnimaGasolina(10, g.get(i)));
                     g.remove(i);
 
                 } else {
@@ -263,8 +290,11 @@ public class PantallaJuego extends Pantalla {
                 // if (k.isSentadilla()) {
                 //   m.remove(i);
                 //   } else {
-                nivelGasolina -= 5;
-                particlesE.add(new AnimaEnemigo(20, obs.get(i)));
+                nivelGasolina -= 10;
+                particlesE.add(new AnimaEnemigo(10, obs.get(i)));
+                Path.vel.mult(.01f);
+                Path.acel.mult(.01f);
+
                 obs.remove(i);
                 // }
             }
@@ -292,6 +322,5 @@ public class PantallaJuego extends Pantalla {
     @Override
     public void mousePressed() {
     }
-
 
 }

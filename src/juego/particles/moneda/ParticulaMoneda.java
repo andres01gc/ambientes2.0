@@ -20,11 +20,11 @@ public class ParticulaMoneda {
     public float tam = 0;
 
     public ParticulaMoneda(PVector pos, int lifespan) {
-        acceleration = new PVector(app.random(-2, 2), app.random(-2, 2));
+        acceleration = new PVector(app.random(-.2f, .2f), app.random(-.2f, .2f));
         velocity = acceleration.copy();
         location = new PVector(pos.x + app.random(-20, 20), pos.y, app.random(-20, 20));
         this.lifespan = lifespan;
-        tam = app.random(5, 10);
+        tam = app.random(2, 10);
     }
 
     void run() {

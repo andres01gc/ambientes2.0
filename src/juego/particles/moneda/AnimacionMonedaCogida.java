@@ -41,7 +41,7 @@ public class AnimacionMonedaCogida {
 
         int i = 0;
 
-        while (i < 30) {
+        while (i < 40) {
             particles.add(new ParticulaMoneda(pos.copy(), (int) app.random(10, 50)));
             i++;
         }

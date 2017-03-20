@@ -14,7 +14,7 @@ public class Path {
     PApplet app = Logica.getApp();
 
     ArrayList<Nodo> points;
-    PVector acel;
+    public static PVector acel;
     public static PVector vel;
     public int tam = 300;
     float radius = 1;
@@ -38,8 +38,8 @@ public class Path {
 
     public Path() {
         points = new ArrayList<>();
-        vel = new PVector(0, 1);
-        acel = new PVector();
+        vel = new PVector(0, 0);
+        acel = new PVector(0, .5f);
         t = app.random(10000);
         startCamino();
     }
@@ -82,22 +82,16 @@ public class Path {
         app.fill(80, 85, 127);
         drawForm(fixX, rango + 100);
 
+
         update();
-
-
         app.fill(255);
-
         drawEnemigos(fixX);
         drawMonedas(fixX);
         drawGasolina(fixX);
 
-
         for (int i = points.size() - 1; i > 0; i--) {
             if (points.get(i).getPos().y > app.height + 200) points.remove(i);
         }
-
-        vel.y += 0.01f;
-
         //   System.out.println("points: " + points.size());
     }
 
@@ -193,6 +187,8 @@ public class Path {
 
 
     public void updateData(float vel) {
+
+
         for (Nodo v : points) {
             if (mover) {
                 // v.x += vel.x;
@@ -244,8 +240,6 @@ public class Path {
     }
 
 
-
-
     public void startCamino() {
         // updateData(vel.y);
         int tam = 300;
@@ -265,8 +259,6 @@ public class Path {
                 v.getPos().y += vel;
             }
         }
-
-
     }
 
     public void mover() {
@@ -274,9 +266,15 @@ public class Path {
     }
 
     public void update() {
+        acel.y += .001;
+        acel.limit(2);
+        vel.y += acel.y;
+
+        vel.limit(7);
         updateData(vel.y);
+
         int tam = 400;
-        if (app.frameCount % 5 == 0) {
+        if (app.frameCount % 15 == 0) {
             float bufferX = app.map(app.noise(t), 0, 1, -tam, tam);
             addPoint(bufferX, -800);
 
@@ -285,11 +283,11 @@ public class Path {
                 enemigos.add(new Obstaculo(bufferX, -800f, rango));
             }
 
-            if (app.random(1) < 0.08) {
+            if (app.random(1) < 0.15) {
                 monedas.add(new Moneda(bufferX, -800f, rango));
             }
 
-            if (app.random(1) < 0.02) {
+            if (app.random(1) < 0.10) {
                 gasolinas.add(new Gasolina(bufferX, -800f, rango));
             }
 

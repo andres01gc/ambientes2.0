@@ -22,12 +22,12 @@ public class ParticulaGasolina {
     private float t;
 
     public ParticulaGasolina(PVector pos, int lifespan) {
-        acceleration = new PVector(app.random(-3, 3), app.random(-3, 3));
+        acceleration = new PVector(app.random(-.5f, .5f), app.random(-.5f, .5f));
         velocity = acceleration.copy();
         velocity.mult(2);
         location = new PVector(pos.x + app.random(-20, 20), pos.y, app.random(-20, 20));
         this.lifespan = lifespan;
-        tam = app.random(5, 10);
+        tam = app.random(2, 5);
         angle = app.random(100);
     }
 
@@ -51,7 +51,7 @@ public class ParticulaGasolina {
         app.translate(location.x, location.y);
         app.rotate(angle);
         app.noFill();
-        app.stroke(62, 206, 27, lifespan + 150);
+        app.stroke(62, 206, 27, lifespan + 50);
         app.ellipse(0, 0, app.sin(t) * (tam * 3), (tam * 3));
 
         app.popMatrix();

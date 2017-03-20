@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public class AnimaEnemigo {
 
+    private final int puntos;
     PVector pos;
     private ArrayList<ParticulaEnemigo> particles;
     PApplet app = Logica.getApp();
@@ -27,6 +28,7 @@ public class AnimaEnemigo {
 
     public AnimaEnemigo(int puntosM, Obstaculo obst) {
         this.pos = obst.getRealPos().copy();
+        this.puntos = puntosM;
         particles = new ArrayList<ParticulaEnemigo>();
 
         resps = new String[]{
@@ -41,14 +43,13 @@ public class AnimaEnemigo {
 
         int i = 0;
 
-        while (i < 30) {
+        while (i < 200) {
             particles.add(new ParticulaEnemigo(pos.copy(), (int) app.random(10, 50)));
             i++;
         }
         pos = new PVector(369, 136);
         t = 350;
     }
-
 
     public void pintar() {
 
@@ -72,7 +73,7 @@ public class AnimaEnemigo {
         app.rotate(angle);
         app.textSize(sizeText);
         app.strokeWeight(5);
-        app.text("-5", 0, 0);
+        app.text(-puntos, 0, 0);
         pos.y += 5;
         app.popMatrix();
 

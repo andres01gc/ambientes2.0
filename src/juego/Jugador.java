@@ -49,20 +49,15 @@ public class Jugador {
 
     public void pintar(int rango, boolean sentadilla) {
         r.pintar();
-
         velocity.y = 0.2f;
-
         app.noStroke();
-
-
         location.x = app.mouseX;
         acceleration.x = app.map(app.mouseX - app.pmouseX, -100, 100, 1, -1);
-
-
         app.pushMatrix();
         app.translate(location.x, location.y);
         app.rotate(velocity.heading() - app.PI / 2);
         app.imageMode(app.CENTER);
+
 
         if (sentadilla) {
             //         image = image;
