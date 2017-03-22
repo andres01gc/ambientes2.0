@@ -21,6 +21,7 @@ public class KinectLink {
     KJoint cabeza;
     public static PVector manoDer = null;
     private Table table;
+    private float distanciaHypeRodillas;
 
     public boolean isSentadilla() {
         return sentadilla;
@@ -29,11 +30,6 @@ public class KinectLink {
     public KJoint[] joints;
 
     public void drawSkeleton() {
-        app.image(kinect.getDepthMaskImage(), 0, 0);
-
-        //    System.out.println("añsfljnbañfnbañsfb" + kinect.getDepthMaskImage().height + "  " + kinect.getDepthImage().width);
-
-        //get the skeletons as an Arraylist of KSkeletons
         ArrayList<KSkeleton> skeletonArray = kinect.getSkeletonDepthMap();
         //individual joints
         for (int i = 0; i < skeletonArray.size(); i++) {
@@ -41,17 +37,20 @@ public class KinectLink {
             //if the skeleton is being tracked compute the skleton joints
             if (skeleton.isTracked()) {
                 KJoint[] joints = skeleton.getJoints();
+
+
+
                 int col = skeleton.getIndexColor();
                 app.fill(col);
                 app.stroke(col);
-
                 drawBody(joints);
-//                drawHandState(joints[KinectPV2.JointType_HandRight]);
-//                drawHandState(joints[KinectPV2.JointType_HandLeft]);
             }
         }
-        app.fill(255, 0, 0);
-        app.text(app.frameRate, 50, 50);
+
+        if( sentadilla) {
+            app.fill(255, 0, 0);
+            app.text(distanciaHypeRodillas, 1000, 50);
+        }
     }
 
     //draw the body
@@ -75,22 +74,23 @@ public class KinectLink {
         drawJoint(joints, KinectPV2.JointType_FootLeft);
         drawJoint(joints, KinectPV2.JointType_FootRight);
 
-
         drawJoint(joints, KinectPV2.JointType_ThumbLeft);
         drawJoint(joints, KinectPV2.JointType_ThumbRight);
 
         drawJoint(joints, KinectPV2.JointType_Head);
     }
 
+
     private void sentadilla(KJoint hipeR, KJoint hipeL, KJoint kneeR, KJoint kneeL) {
         float dkneelY = kneeL.getY() - hipeL.getY();
         float dHype = app.dist(hipeL.getX(), hipeL.getY(), hipeR.getX(), hipeR.getY());
-//
-        float distanciaHypeRodillas = dkneelY / dHype;
+
+        distanciaHypeRodillas = dkneelY / dHype;
         app.fill(255);
         app.textSize(50);
 
-        if (distanciaHypeRodillas < 2f) {
+
+        if (distanciaHypeRodillas < 1.7f) {
             sentadilla = true;
         } else {
             sentadilla = false;
@@ -159,9 +159,7 @@ Different hand state
 
 
     public boolean sentadilla() {
-
-
-        return false;
+        return sentadilla;
     }
 
     public static KinectLink getInstance() {
@@ -172,21 +170,14 @@ Different hand state
 
     public void saveSkeletonByFrame() {
         TableRow newRow = table.addRow();
-//        table.setFloat("frame");
-//
-//        table.setFloat("equilibrio-x");
-//        table.setFloat("equilibrio-y");
-//        table.setFloat("equilibrio-z");
 
         newRow.setFloat("Head-x", joints[KinectPV2.JointType_Head].getX());
         newRow.setFloat("Head-y", joints[KinectPV2.JointType_Head].getY());
         newRow.setFloat("Head-z", joints[KinectPV2.JointType_Head].getZ());
 
-
         newRow.setFloat("Neck-x", joints[KinectPV2.JointType_Neck].getX());
         newRow.setFloat("Neck-y", joints[KinectPV2.JointType_Neck].getY());
         newRow.setFloat("Neck-z", joints[KinectPV2.JointType_Neck].getZ());
-
 
         newRow.setFloat("SpineShoulder-x", joints[KinectPV2.JointType_SpineShoulder].getX());
         newRow.setFloat("SpineShoulder-y", joints[KinectPV2.JointType_SpineShoulder].getY());
@@ -196,12 +187,9 @@ Different hand state
         newRow.setFloat("SpineMid-y", joints[KinectPV2.JointType_SpineMid].getY());
         newRow.setFloat("SpineMid-z", joints[KinectPV2.JointType_SpineMid].getZ());
 
-
         newRow.setFloat("SpineBase-x", joints[KinectPV2.JointType_SpineBase].getX());
         newRow.setFloat("SpineBase-y", joints[KinectPV2.JointType_SpineBase].getY());
         newRow.setFloat("SpineBase-z", joints[KinectPV2.JointType_SpineBase].getZ());
-
-//RIGTH
 
         newRow.setFloat("HipRight-x", joints[KinectPV2.JointType_HipRight].getX());
         newRow.setFloat("HipRight-y", joints[KinectPV2.JointType_HipRight].getY());
@@ -215,11 +203,9 @@ Different hand state
         newRow.setFloat("ShoulderRigh-y", joints[KinectPV2.JointType_ShoulderRight].getY());
         newRow.setFloat("ShoulderRigh-z", joints[KinectPV2.JointType_ShoulderRight].getZ());
 
-
         newRow.setFloat("ElbowRight-x", joints[KinectPV2.JointType_ElbowRight].getX());
         newRow.setFloat("ElbowRight-y", joints[KinectPV2.JointType_ElbowRight].getY());
         newRow.setFloat("ElbowRight-z", joints[KinectPV2.JointType_ElbowRight].getZ());
-
 
         newRow.setFloat("WristRight-x", joints[KinectPV2.JointType_WristRight].getX());
         newRow.setFloat("WristRight-y", joints[KinectPV2.JointType_WristRight].getY());
@@ -237,8 +223,6 @@ Different hand state
         newRow.setFloat("ThumbRight-y", joints[KinectPV2.JointType_ThumbRight].getY());
         newRow.setFloat("ThumbRight-z", joints[KinectPV2.JointType_ThumbRight].getZ());
 
-//LEFT
-
         newRow.setFloat("ShoulderLeft-x", joints[KinectPV2.JointType_ShoulderLeft].getX());
         newRow.setFloat("ShoulderLeft-y", joints[KinectPV2.JointType_ShoulderLeft].getY());
         newRow.setFloat("ShoulderLeft-z", joints[KinectPV2.JointType_ShoulderLeft].getZ());
@@ -246,7 +230,6 @@ Different hand state
         newRow.setFloat("ElbowLeft-x", joints[KinectPV2.JointType_ElbowLeft].getX());
         newRow.setFloat("ElbowLeft-y", joints[KinectPV2.JointType_ElbowLeft].getY());
         newRow.setFloat("ElbowLeft-z", joints[KinectPV2.JointType_ElbowLeft].getZ());
-
 
         newRow.setFloat("WristLeft-x", joints[KinectPV2.JointType_WristLeft].getX());
         newRow.setFloat("WristLeft-y", joints[KinectPV2.JointType_WristLeft].getY());
@@ -263,7 +246,6 @@ Different hand state
         newRow.setFloat("ThumbLeft-x", joints[KinectPV2.JointType_ThumbLeft].getX());
         newRow.setFloat("ThumbLeft-y", joints[KinectPV2.JointType_ThumbLeft].getY());
         newRow.setFloat("ThumbLeft-z", joints[KinectPV2.JointType_ThumbLeft].getZ());
-
 
         newRow.setFloat("KneeRight-x", joints[KinectPV2.JointType_ThumbLeft].getX());
         newRow.setFloat("KneeRight-y", joints[KinectPV2.JointType_ThumbLeft].getY());
@@ -288,17 +270,16 @@ Different hand state
         newRow.setFloat("FootLeft-x", joints[KinectPV2.JointType_FootLeft].getX());
         newRow.setFloat("FootLeft-y", joints[KinectPV2.JointType_FootLeft].getZ());
         newRow.setFloat("FootLeft-z", joints[KinectPV2.JointType_FootLeft].getY());
-        app.saveTable(table, "../data/datass.csv");
-        System.out.println("guarda!");
+        app.saveTable(table, "../data/kinect.csv");
     }
+
+
+
 
     public void createColums() {
 
         table = new Table();
-
-
         table.addColumn("frame");
-
         table.addColumn("equilibrio-x");
         table.addColumn("equilibrio-y");
         table.addColumn("equilibrio-z");
@@ -424,15 +405,11 @@ Different hand state
         kinect.enableSkeletonDepthMap(true);
         kinect.init();
 
-
         new Thread(new Runnable() {
 
             @Override
             public synchronized void run() {
-
-
                 while (true) {
-
                     ArrayList<KSkeleton> skeletonArray = kinect.getSkeletonDepthMap();
                     //individual joints
                     for (int i = 0; i < skeletonArray.size(); i++) {
@@ -440,11 +417,10 @@ Different hand state
                         //if the skeleton is being tracked compute the skleton joints
                         if (skeleton.isTracked()) {
                             joints = skeleton.getJoints();
-                            sentadilla(joints[KinectPV2.JointType_HipRight], joints[KinectPV2.JointType_HipLeft], joints[KinectPV2.JointType_KneeLeft], joints[KinectPV2.JointType_KneeRight]);
+                            sentadilla(joints[KinectPV2.JointType_HipRight], joints[KinectPV2.JointType_HipLeft],
+                                    joints[KinectPV2.JointType_KneeLeft], joints[KinectPV2.JointType_KneeRight]);
 
-                            //                        drawBody(joints);
                             drawHandState(joints[KinectPV2.JointType_HandRight]);
-//                        drawHandState(joints[KinectPV2.JointType_HandLeft]);
                         }
                     }
 
@@ -456,9 +432,7 @@ Different hand state
                 }
             }
         }).start();
-
         createColums();
-
     }
 
     public void startRec() {

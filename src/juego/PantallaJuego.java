@@ -1,26 +1,26 @@
 package juego;
 
 
+import info.Data;
 import info.Info;
 import juego.particles.enemigo.AnimaEnemigo;
 import juego.particles.gasolina.AnimaGasolina;
 import juego.particles.moneda.AnimacionMonedaCogida;
 import juego.sky.Sky;
 import processing.core.PImage;
-import processing.core.PVector;
+import revisar.KinectLink;
 import setup.Pantalla;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 public class PantallaJuego extends Pantalla {
     private Path p;
     private Jugador j;
-    // KinectLink k;
+    KinectLink k;
 
 
     private int tiempoRegresivo = 5;
-    private int nivelGasolina = 100;
+    private int nivelGasolina = 500;
 
     private PImage fondo0, fondo1;
     private boolean inicioJuego = false;
@@ -31,9 +31,12 @@ public class PantallaJuego extends Pantalla {
     private int pantalla = 1;
     private ArrayList<AnimacionMonedaCogida> particlesMoneda = new ArrayList<AnimacionMonedaCogida>();
     private ArrayList<AnimaGasolina> particlesG = new ArrayList<AnimaGasolina>();
-
-    private int puntaje = 0;
     private ArrayList<AnimaEnemigo> particlesE = new ArrayList<>();
+
+    private boolean bcontrario = false;
+    private int puntaje;
+    private boolean fueraCamino;
+    private Data d;
 
     @Override
     public void iniciar() {
@@ -46,7 +49,8 @@ public class PantallaJuego extends Pantalla {
 
         fondo0 = app.loadImage("../data/resources/juego/interfaz/47.png");
         fondo1 = app.loadImage("../data/resources/juego/interfaz/48.png");
-        // k = KinectLink.getInstance();
+        k = KinectLink.getInstance();
+        d = Data.getInstance();
     }
 
 
@@ -64,9 +68,14 @@ public class PantallaJuego extends Pantalla {
             if (app.frameCount % 10 == 0)
                 nivelGasolina -= 1;
             app.popMatrix();
+            fueraCamino = true;
 
+            if (bcontrario == false) {
+                Data.sentadillas++;
+                bcontrario = true;
+            }
         } else {
-
+            fueraCamino = false;
             app.background(51, 51, 86);
         }
         sky.pintar();
@@ -83,10 +92,7 @@ public class PantallaJuego extends Pantalla {
         app.fill(255);
         app.text(nivelGasolina, 262, 70);
         app.text(puntaje, 1801, 120);
-        nivelGasolina = app.constrain(nivelGasolina, -1, 100);
-
-
-
+        nivelGasolina = app.constrain(nivelGasolina, -1, 500);
     }
 
     public void pintarBarraEnergia() {
@@ -97,7 +103,7 @@ public class PantallaJuego extends Pantalla {
             app.fill(247, 199, 42, 200);
         }
 
-        float tam = app.map(nivelGasolina, 0, 100, 0, 360);
+        float tam = app.map(nivelGasolina, 0, 1000, 0, 360);
         app.rect(-2 + app.map(app.noise(tt + tt + 951), 0, 1, -vibra, vibra), 105 + app.map(app.noise(tt + tt + 183), 0, 1, -vibra, vibra), tam, 62, 6, 6, 6, 6);
 
     }
@@ -107,6 +113,7 @@ public class PantallaJuego extends Pantalla {
     public void pintar() {
 
         fondo();
+        k.drawSkeleton();
 
 
         switch (pantalla) {
@@ -120,13 +127,12 @@ public class PantallaJuego extends Pantalla {
 
             case 2:
                 game();
-
+                Data.puntaje = puntaje;
                 break;
         }
 
         gui();
 
-        //k.drawSkeleton();
 
     }
 
@@ -151,9 +157,26 @@ public class PantallaJuego extends Pantalla {
                 tiempoRegresivo--;
 
                 if (tiempoRegresivo < 0) {
-                    //      k.startRec();
+                    k.startRec();
                     inicioJuego = true;
                     pantalla++;
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (pantalla == 2) {
+                                Data.tiempoFueraDelCamino++;
+                                if (fueraCamino) {
+                                    Data.tiempoFueraDelCamino++;
+                                }
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }).start();
                 }
             }
         }
@@ -167,10 +190,9 @@ public class PantallaJuego extends Pantalla {
 
 
     public void game() {
-        //  k.drawSkeleton();
         p.mover();
         p.draw((app.width / 2) + (int) (app.map(app.noise(t), 0, 1, -100, 100)));
-        j.pintar(900, true);
+        j.pintar(1200, k.sentadilla());
         j.comprobar(p);
         //j.follow(p);
         t += 0.002;
@@ -182,30 +204,36 @@ public class PantallaJuego extends Pantalla {
         pintarParticulasG();
         pintarParticulasE();
         pintarHandRight();
-        update();
 
+        //detectar sentadilla;
+        if (k.isSentadilla() && !bcontrario) {
+            Data.sentadillas++;
+            bcontrario = true;
+        } else {
+            bcontrario = false;
+        }
+        update();
     }
 
 
     public void update() {
         if (app.frameCount % 20 == 0) {
             nivelGasolina--;
-            puntaje += Path.vel.mag()/4;
+            puntaje += Path.vel.mag() / 4;
         }
 
 
-        if(nivelGasolina < 20){
+        if (nivelGasolina < 20) {
             app.textAlign(app.CENTER, app.CENTER);
-            app.fill(255,200);
+            app.fill(255, 200);
             app.textSize(50);
-            app.text("Combustible bajo!",1920/2,1000);
+            app.text("Combustible bajo!", 1920 / 2, 1000);
         }
 
-        if (nivelGasolina == 0) {
+        if (nivelGasolina < 0) {
             pantalla++;
-            ///dejar de guardar!
-            //guardar datos importantes al final de la partida.
 
+            d.saveData();
         }
 
     }
@@ -215,20 +243,19 @@ public class PantallaJuego extends Pantalla {
         for (int i = m.size() - 1; i > 0; i--) {
 
             if (app.dist(m.get(i).getRealPos().x, m.get(i).getRealPos().y, j.getLocation().x, j.getLocation().y) < 70) {
-                if (/*k.isSentadilla()*/true) {
-
-                    int puntos = (int) (m.get(i).getTam() / 4);
-                    puntaje += puntos;
-                    particlesMoneda.add(new AnimacionMonedaCogida(puntos, m.get(i)));
+                //  if (k.isSentadilla()) {
+                int puntos = (int) (m.get(i).getTam() / 4);
+                puntaje += puntos;
+                particlesMoneda.add(new AnimacionMonedaCogida(puntos, m.get(i)));
+                m.remove(i);
+                Data.monedasRecogidas++;
+            } else {
+                if (m.get(i).getRealPos().y > app.height) {
                     m.remove(i);
-
-                } else {
-                    if (m.get(i).getRealPos().y > app.height) {
-                        m.remove(i);
-                    }
                 }
             }
         }
+
     }
 
     public void detectarGasolina() {
@@ -236,11 +263,12 @@ public class PantallaJuego extends Pantalla {
         for (int i = g.size() - 1; i > 0; i--) {
 
             if (app.dist(g.get(i).getRealPos().x, g.get(i).getRealPos().y, j.getLocation().x, j.getLocation().y) < 70) {
-                if (/*k.isSentadilla()*/true) {
+                if (k.isSentadilla()) {
 
                     nivelGasolina += 10;
                     particlesG.add(new AnimaGasolina(10, g.get(i)));
                     g.remove(i);
+                    Data.combustibleObtenido++;
 
                 } else {
                     if (g.get(i).getRealPos().y > app.height) {
@@ -294,8 +322,8 @@ public class PantallaJuego extends Pantalla {
                 particlesE.add(new AnimaEnemigo(10, obs.get(i)));
                 Path.vel.mult(.01f);
                 Path.acel.mult(.01f);
-
                 obs.remove(i);
+                Data.obstaculosEfectivos++;
                 // }
             }
         }
@@ -303,6 +331,7 @@ public class PantallaJuego extends Pantalla {
 
     @Override
     public void pressHandRight() {
+
 
     }
 

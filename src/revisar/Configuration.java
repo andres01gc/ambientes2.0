@@ -11,7 +11,7 @@ import setup.Pantalla;
 public class Configuration {
     static PApplet app;
     static Configuration c;
-    public static Pantalla pantallaInicial = new PantallaInicial();
+    public static Pantalla pantallaInicial = new PantallaJuego();
 
 
     public Configuration() {
@@ -26,7 +26,6 @@ public class Configuration {
     }
 
     public static void pantalla() {
-
 
     }
 

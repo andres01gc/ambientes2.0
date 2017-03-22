@@ -1,5 +1,6 @@
 package juego;
 
+import info.Data;
 import juego.particles.path.Nodo;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -28,13 +29,11 @@ public class Path {
     ArrayList<Gasolina> gasolinas = new ArrayList<>();
 
     private ArrayList<PVector> posicionesSalida;
-    private int rango = 600;
-
+    private int rango = 750;
 
     public ArrayList<PVector> getPosicionesSalida() {
         return posicionesSalida;
     }
-
 
     public Path() {
         points = new ArrayList<>();
@@ -92,6 +91,7 @@ public class Path {
         for (int i = points.size() - 1; i > 0; i--) {
             if (points.get(i).getPos().y > app.height + 200) points.remove(i);
         }
+
         //   System.out.println("points: " + points.size());
     }
 
@@ -133,9 +133,9 @@ public class Path {
             Moneda e = monedas.get(i);
             e.pintar(posX);
             e.mover(vel.y);
-            {
-                if (e.location.y > app.height + 100) monedas.remove(e);
-            }
+
+            if (e.location.y > app.height + 100) monedas.remove(e);
+
         }
         //  System.out.println("monedas " + monedas.size());
 
@@ -281,19 +281,19 @@ public class Path {
 
             if (app.random(1) < 0.08) {
                 enemigos.add(new Obstaculo(bufferX, -800f, rango));
+                Data.obstaculosDesplegados++;
             }
 
             if (app.random(1) < 0.15) {
                 monedas.add(new Moneda(bufferX, -800f, rango));
+                Data.monedasDesplegadas++;
             }
 
-            if (app.random(1) < 0.10) {
+            if (app.random(1) < 0.14) {
                 gasolinas.add(new Gasolina(bufferX, -800f, rango));
+                Data.combustibleDeplegado++;
             }
-
         }
-
-
         t += 0.006f;
     }
 

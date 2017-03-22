@@ -27,6 +27,7 @@ public class Jugador {
     PImage image;
 
     private boolean fuera;
+    private float valor;
 
 
     public boolean isFuera() {
@@ -51,23 +52,25 @@ public class Jugador {
         r.pintar();
         velocity.y = 0.2f;
         app.noStroke();
-        location.x = app.mouseX;
-        acceleration.x = app.map(app.mouseX - app.pmouseX, -100, 100, 1, -1);
+
+
         app.pushMatrix();
         app.translate(location.x, location.y);
         app.rotate(velocity.heading() - app.PI / 2);
         app.imageMode(app.CENTER);
 
-
         if (sentadilla) {
-            //         image = image;
+            app.fill(0, 20);
+            app.ellipse(0, 0, 200, 200);
         } else {
-            //         image = image;
+
         }
 
+        //location.x = app.mouseX;
+
         if (Main.valorFloats != null) {
-            //  float bufferX = app.map(Main.valorFloats[1], -30, 30, -rango, rango);
-            //location.x = (1920 / 2) + bufferX;
+            float bufferX = app.map(Main.valorFloats[1], -30, 20, -rango, rango);
+            location.x = (1920 / 2) + bufferX;
             app.image(image, 0, -30);
         } else {
             app.image(image, 0, -30);
@@ -86,7 +89,7 @@ public class Jugador {
     public void comprobar(Path p) {
         fuera = false;
         for (PVector pv : p.getPosicionesSalida()) {
-               // app.ellipse(pv.x, pv.y, 100, 100);
+            // app.ellipse(pv.x, pv.y, 100, 100);
             if (app.dist(location.x, location.y, pv.x, pv.y) < 100) {
                 fuera = true;
                 //  System.out.println("se fuera");

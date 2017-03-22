@@ -31,7 +31,6 @@ public class Main extends PApplet {
         }
     }
 
-
     public void settings() {
         fullScreen(P3D);
         //size(1920, 1080,FX2D);
@@ -46,50 +45,50 @@ public class Main extends PApplet {
         Pantalla.app = this;
         //	app = this;
         logica = new Logica(this);
-        //  escucharArduino();
+        escucharArduino();
         textFont(createFont("../data/resources/fuente.otf", 200));
     }
 
 
-    public void escucharArduino() {
+        public void escucharArduino() {
 
-        println(SerialPortList.getPortNames());
+            println(SerialPortList.getPortNames());
 
-        valorFloats = null;
-        myPort = new Serial(this, Serial.list()[0], 115200);
-        myPort.bufferUntil('\n');
+            valorFloats = null;
+            myPort = new Serial(this, Serial.list()[0], 115200);
+            myPort.bufferUntil('\n');
 
-        valorFloats = new float[]{
-                0, 0, 0
-        };
+            valorFloats = new float[]{
+                    0, 0, 0
+            };
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    if (inString != null) {
-                        valString = inString.split(",");
-                        System.out.println("linea completa: " + inString);
-                        System.out.println("strings " + valString[0] + "  " + valString[1] + "  " + valString[2] + "  ");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        if (inString != null) {
+                            valString = inString.split(",");
+                            System.out.println("linea completa: " + inString);
+                            System.out.println("strings " + valString[0] + "  " + valString[1] + "  " + valString[2] + "  ");
 
-                        valorFloats = new float[]{
-                                valorFloats[0] = Float.parseFloat(valString[0]),
-                                valorFloats[1] = Float.parseFloat(valString[1]),
-                                valorFloats[2] = Float.parseFloat(valString[2])
-                        };
+                            valorFloats = new float[]{
+                                    valorFloats[0] = Float.parseFloat(valString[0]),
+                                    valorFloats[1] = Float.parseFloat(valString[1]),
+                                    valorFloats[2] = Float.parseFloat(valString[2])
+                            };
 
-                        System.out.println("float " + valorFloats[0] + "  " + valorFloats[1] + "  " + valorFloats[2] + "  ");
-                    }
+                            System.out.println("float " + valorFloats[0] + "  " + valorFloats[1] + "  " + valorFloats[2] + "  ");
+                        }
 
-                    try {
-                        Thread.sleep(33);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        try {
+                            Thread.sleep(33);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-        }).start();
-    }
+            }).start();
+        }
 
     public void draw() {
         background(255);
@@ -131,4 +130,6 @@ public class Main extends PApplet {
     public void serialEvent(Serial myPort) {
         inString = myPort.readStringUntil('\n');
     }
+
+
 }
