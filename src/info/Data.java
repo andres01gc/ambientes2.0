@@ -2,6 +2,7 @@ package info;
 
 import KinectPV2.KinectPV2;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.data.Table;
 import processing.data.TableRow;
 import setup.Pantalla;
@@ -13,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Data {
 
+    public static int tiempo;
     PApplet app = Pantalla.app;
     public static int puntaje;
     public static int monedasDesplegadas;
@@ -37,11 +39,11 @@ public class Data {
         combustibleDeplegado = 0;
         combustibleObtenido = 0;
         tiempoFueraDelCamino = 0;
+
     }
 
 
     public void crearTablas() {
-
         table.addColumn("puntaje");
         table.addColumn("monedasDesplegadas");
         table.addColumn("monedasRecogidas");
@@ -51,7 +53,6 @@ public class Data {
         table.addColumn("combustibleDeplegado");
         table.addColumn("combustibleObtenido");
         table.addColumn("tiempoFueraDelCamino");
-
     }
 
     public void saveData() {
@@ -76,6 +77,7 @@ public class Data {
 
         return d;
     }
+
 
 
     Data() {

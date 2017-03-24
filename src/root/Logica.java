@@ -3,6 +3,7 @@ package root;
 import info.Info;
 import pantallas.Configuraciones;
 import pantallas.PantallaInicial;
+import pantallas.visualInterface.MenuC;
 import processing.core.PApplet;
 
 import revisar.Configuration;
@@ -22,6 +23,7 @@ public class Logica {
         KinectLink.getInstance();
         Info.getInstance();
         AdministradorPantalla.cambiarPantalla(Configuration.pantallaInicial);
+        AdministradorPantalla.cambiarInterfaz(new MenuC());
         AdministradorPantalla.getCurrentScreen().iniciar();
     }
 

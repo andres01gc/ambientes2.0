@@ -43,5 +43,15 @@
         <jarDirectory url="file://$MODULE_DIR$/libs/p3.01/library" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/libs/minim" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/libs/minim" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>

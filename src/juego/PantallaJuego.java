@@ -1,14 +1,20 @@
 package juego;
 
 
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
 import info.Data;
 import info.Info;
+import javazoom.jl.player.Player;
 import juego.particles.enemigo.AnimaEnemigo;
 import juego.particles.gasolina.AnimaGasolina;
 import juego.particles.moneda.AnimacionMonedaCogida;
 import juego.sky.Sky;
+import pantallas.PantallaFinal;
 import processing.core.PImage;
 import revisar.KinectLink;
+import root.Main;
+import setup.AdministradorPantalla;
 import setup.Pantalla;
 
 import java.util.ArrayList;
@@ -16,11 +22,11 @@ import java.util.ArrayList;
 public class PantallaJuego extends Pantalla {
     private Path p;
     private Jugador j;
-    KinectLink k;
+    //  KinectLink k;
 
 
     private int tiempoRegresivo = 5;
-    private int nivelGasolina = 500;
+    private int nivelGasolina = 100;
 
     private PImage fondo0, fondo1;
     private boolean inicioJuego = false;
@@ -38,6 +44,9 @@ public class PantallaJuego extends Pantalla {
     private boolean fueraCamino;
     private Data d;
 
+    Minim minim;
+    AudioPlayer player;
+
     @Override
     public void iniciar() {
         Info.getInstance().cargarObstaculos();
@@ -49,10 +58,18 @@ public class PantallaJuego extends Pantalla {
 
         fondo0 = app.loadImage("../data/resources/juego/interfaz/47.png");
         fondo1 = app.loadImage("../data/resources/juego/interfaz/48.png");
-        k = KinectLink.getInstance();
+        //    k = KinectLink.getInstance();
         d = Data.getInstance();
+        iniciarMusica();
     }
 
+    public void iniciarMusica() {
+        minim = new Minim(app);
+        player = minim.loadFile("../data/sounds/coin.mp3", 2048);
+        Main.p.pause();
+        Main.p = minim.loadFile("../data/sounds/Sound Remedy & Nitro Fun - Turbo Penguin.mp3", 2048);
+        Main.p.play();
+    }
 
     public void fondo() {
         if (j.isFuera()) {
@@ -85,8 +102,8 @@ public class PantallaJuego extends Pantalla {
     public void gui() {
         app.imageMode(app.CORNER);
         pintarBarraEnergia();
-        app.image(fondo0, app.map(app.noise(tt + tt + 624), 0, 1, -vibra, vibra), app.map(app.noise(tt + 6998), 0, 1, -vibra, vibra));
-        app.image(fondo1, app.map(app.noise(tt + tt + 981), 0, 1, -vibra, vibra), app.map(app.noise(tt + 691), 0, 1, -vibra, vibra));
+        app.image(fondo0, app.map(app.noise(tt + 624), 0, 1, -vibra, vibra), app.map(app.noise(tt + 6998), 0, 1, -vibra, vibra));
+        app.image(fondo1, app.map(app.noise(tt + 981), 0, 1, -vibra, vibra), app.map(app.noise(tt + 691), 0, 1, -vibra, vibra));
 
         app.textSize(40);
         app.fill(255);
@@ -104,7 +121,7 @@ public class PantallaJuego extends Pantalla {
         }
 
         float tam = app.map(nivelGasolina, 0, 1000, 0, 360);
-        app.rect(-2 + app.map(app.noise(tt + tt + 951), 0, 1, -vibra, vibra), 105 + app.map(app.noise(tt + tt + 183), 0, 1, -vibra, vibra), tam, 62, 6, 6, 6, 6);
+        app.rect(-2 + app.map(app.noise(tt + 951), 0, 1, -vibra, vibra), 105 + app.map(app.noise(tt + 183), 0, 1, -vibra, vibra), tam, 62, 6, 6, 6, 6);
 
     }
 
@@ -113,12 +130,12 @@ public class PantallaJuego extends Pantalla {
     public void pintar() {
 
         fondo();
-        k.drawSkeleton();
+        //  k.drawSkeleton();
 
 
         switch (pantalla) {
             case 0:
-                validarEstadoSujeto();
+                // validarEstadoSujeto();
                 break;
 
             case 1:
@@ -132,12 +149,6 @@ public class PantallaJuego extends Pantalla {
         }
 
         gui();
-
-
-    }
-
-    //aquí se deberá validar alzando las manos al cielito;
-    private void validarEstadoSujeto() {
 
 
     }
@@ -157,7 +168,7 @@ public class PantallaJuego extends Pantalla {
                 tiempoRegresivo--;
 
                 if (tiempoRegresivo < 0) {
-                    k.startRec();
+//                  k.startRec();
                     inicioJuego = true;
                     pantalla++;
 
@@ -165,7 +176,7 @@ public class PantallaJuego extends Pantalla {
                         @Override
                         public void run() {
                             while (pantalla == 2) {
-                                Data.tiempoFueraDelCamino++;
+                                Data.tiempo++;
                                 if (fueraCamino) {
                                     Data.tiempoFueraDelCamino++;
                                 }
@@ -192,21 +203,19 @@ public class PantallaJuego extends Pantalla {
     public void game() {
         p.mover();
         p.draw((app.width / 2) + (int) (app.map(app.noise(t), 0, 1, -100, 100)));
-        j.pintar(1200, k.sentadilla());
+        j.pintar(1200, /*k.sentadilla()*/true);
         j.comprobar(p);
         //j.follow(p);
         t += 0.002;
-
         detectarMonedas();
         detectarEnemigos();
         detectarGasolina();
         pintarParticulasM();
         pintarParticulasG();
         pintarParticulasE();
-        pintarHandRight();
 
         //detectar sentadilla;
-        if (k.isSentadilla() && !bcontrario) {
+        if (/*k.isSentadilla()*/true && !bcontrario) {
             Data.sentadillas++;
             bcontrario = true;
         } else {
@@ -222,7 +231,6 @@ public class PantallaJuego extends Pantalla {
             puntaje += Path.vel.mag() / 4;
         }
 
-
         if (nivelGasolina < 20) {
             app.textAlign(app.CENTER, app.CENTER);
             app.fill(255, 200);
@@ -232,10 +240,9 @@ public class PantallaJuego extends Pantalla {
 
         if (nivelGasolina < 0) {
             pantalla++;
-
             d.saveData();
+            AdministradorPantalla.cambiarPantalla(new PantallaFinal());
         }
-
     }
 
     public void detectarMonedas() {
@@ -249,6 +256,7 @@ public class PantallaJuego extends Pantalla {
                 particlesMoneda.add(new AnimacionMonedaCogida(puntos, m.get(i)));
                 m.remove(i);
                 Data.monedasRecogidas++;
+                player.rewind();
             } else {
                 if (m.get(i).getRealPos().y > app.height) {
                     m.remove(i);
@@ -263,7 +271,7 @@ public class PantallaJuego extends Pantalla {
         for (int i = g.size() - 1; i > 0; i--) {
 
             if (app.dist(g.get(i).getRealPos().x, g.get(i).getRealPos().y, j.getLocation().x, j.getLocation().y) < 70) {
-                if (k.isSentadilla()) {
+                if (/*k.isSentadilla()*/true) {
 
                     nivelGasolina += 10;
                     particlesG.add(new AnimaGasolina(10, g.get(i)));
@@ -313,7 +321,6 @@ public class PantallaJuego extends Pantalla {
     public void detectarEnemigos() {
         ArrayList<Obstaculo> obs = p.enemigos;
         for (int i = obs.size() - 1; i > 0; i--) {
-
             if (app.dist(obs.get(i).getRealPos().x, obs.get(i).getRealPos().y, j.getLocation().x, j.getLocation().y) < 70) {
                 // if (k.isSentadilla()) {
                 //   m.remove(i);
@@ -351,5 +358,4 @@ public class PantallaJuego extends Pantalla {
     @Override
     public void mousePressed() {
     }
-
 }

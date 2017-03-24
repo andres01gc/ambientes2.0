@@ -10,6 +10,7 @@ public class Info {
     private static Info info;
 
     public static PImage PLAYER;
+    public PImage[] meteoros;
 
     public PImage ima1, ima2, ima3, ima4;
 
@@ -32,6 +33,9 @@ public class Info {
     public PImage[] obstaculos;
     public PImage ij4, ij3, ij2, ij1;
     public PImage insJ1, insJ2, insJ3;
+    public PImage fin2;
+    public PImage fin1;
+    public PImage fin3;
 
     public void loadInicio() {
         ima1 = app.loadImage("../data/resources/pantallaInicial/1.png");
@@ -63,7 +67,6 @@ public class Info {
 
         onL = app.loadImage("../data/resources/perfil/21.png");
         onF = app.loadImage("../data/resources/perfil/22.png");
-
     }
 
 
@@ -102,13 +105,9 @@ public class Info {
     }
 
     public void loadInstrucciones() {
-
         inst1 = app.loadImage("../data/resources/instrucciones/28.png");
         inst2 = app.loadImage("../data/resources/instrucciones/29.png");
-
-
     }
-
 
     public void cargarObstaculos() {
         obstaculos = new PImage[]{
@@ -116,8 +115,25 @@ public class Info {
                 app.loadImage("../data/resources/juego/enemigos/ene2.png"),
                 app.loadImage("../data/resources/juego/enemigos/ene3.png"),
                 app.loadImage("../data/resources/juego/enemigos/ene4.png"),
-
         };
-
     }
+
+
+    public void cargarPantallaFinal() {
+        fin1 = app.loadImage("../data/resources/pantallafinal/49.png");
+        fin2 = app.loadImage("../data/resources/pantallafinal/50.png");
+        fin3 = app.loadImage("../data/resources/pantallafinal/51.png");
+    }
+
+
+    public void loadMeteoros() {
+        meteoros = new PImage[]{
+                app.loadImage("../data/resources/juego/meteoros/m1.png"),
+                app.loadImage("../data/resources/juego/meteoros/m2.png"),
+                app.loadImage("../data/resources/juego/meteoros/m3.png"),
+                app.loadImage("../data/resources/juego/meteoros/m4.png"),
+        };
+    }
+
+
 }

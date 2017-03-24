@@ -1,5 +1,7 @@
 package juego.sky;
 
+import info.Info;
+
 import java.util.ArrayList;
 
 /**
@@ -7,12 +9,21 @@ import java.util.ArrayList;
  */
 public class Sky {
 
+    private final ArrayList<Meteoro> meteoros = new ArrayList<>();
     ArrayList<Estrella> estrellas = new ArrayList<>();
 
     public Sky() {
+        Info.getInstance().loadMeteoros();
+
         int i = 0;
         while (i < 50) {
             estrellas.add(new Estrella());
+            i++;
+        }
+
+        i = 0;
+        while (i < 4) {
+            meteoros.add(new Meteoro());
             i++;
         }
 
@@ -26,7 +37,9 @@ public class Sky {
             e.pintar();
         }
 
-
+        for (Meteoro m : meteoros) {
+            m.pintar();
+        }
     }
 
 

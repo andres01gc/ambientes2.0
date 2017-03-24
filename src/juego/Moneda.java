@@ -1,5 +1,7 @@
 package juego;
 
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
 import processing.core.PApplet;
 import processing.core.PVector;
 import root.Logica;
@@ -18,7 +20,6 @@ public class Moneda {
     PVector velocity;
     PVector acceleration;
     PApplet app = Logica.getApp();
-
 
     public boolean mov;
     float r;
@@ -40,6 +41,8 @@ public class Moneda {
         velX = app.random(5);
         location.x += app.random(-rango / 2, rango / 2);
         tam = 40;
+
+        //minim = new Minim(app);
     }
 
 

@@ -176,8 +176,8 @@ public class Path {
 
         int fix = 100;
         for (Nodo v : points) {
-            posicionesSalida.add(new PVector(v.getPos().x + newX - tam - fix, v.getPos().y));
-            posicionesSalida.add(new PVector(v.getPos().x + newX + tam + fix, v.getPos().y));
+            posicionesSalida.add(new PVector(v.getPos().x + newX - 570 - fix, v.getPos().y));
+            posicionesSalida.add(new PVector(v.getPos().x + newX + 570 + fix, v.getPos().y));
             // app.vertex(v.getPos().x + newX, v.getPos().y);
         }
 

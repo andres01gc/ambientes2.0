@@ -1,9 +1,7 @@
 package revisar;
 
 import juego.PantallaJuego;
-import pantallas.Instrucciones;
-import pantallas.PantallaInicial;
-import pantallas.PresentacionJuego;
+import pantallas.*;
 import processing.core.PApplet;
 import root.Logica;
 import setup.Pantalla;
@@ -11,7 +9,7 @@ import setup.Pantalla;
 public class Configuration {
     static PApplet app;
     static Configuration c;
-    public static Pantalla pantallaInicial = new PantallaJuego();
+    public static Pantalla pantallaInicial = new PantallaJuego()  ;
 
 
     public Configuration() {
