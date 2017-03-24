@@ -31,6 +31,7 @@ public class Configuration {
         return app;
     }
 
+
     public static void setApp(PApplet app) {
         Configuration.app = app;
     }
