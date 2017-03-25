@@ -51,19 +51,16 @@ public class InstruccionesJuego extends Pantalla {
         );
 
         app.textSize(40);
-        app.text("Continuar", 1920 / 2, 900);
+        app.text("Continuar", 1920 / 2, 1000);
         pintarHandRight();
     }
 
 
     @Override
     public void pressHandRight() {
-
-        if (app.dist(1920 / 2, 900, Hand.pos.y, Hand.pos.y) < 300) {
+        if (app.dist(1920 / 2, 1000, Hand.pos.y, Hand.pos.y) < 300) {
             AdministradorPantalla.cambiarPantalla(new PantallaJuego());
         }
-
-
     }
 
     @Override

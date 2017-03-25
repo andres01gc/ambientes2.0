@@ -1,8 +1,13 @@
 package pantallas;
 
+import ddf.minim.Minim;
 import info.Data;
 import info.Info;
+import root.Main;
+import setup.AdministradorPantalla;
 import setup.Pantalla;
+
+import static root.Main.p;
 
 /**
  * Created by andre on 3/23/2017.
@@ -41,10 +46,17 @@ public class PantallaFinal extends Pantalla {
         app.text(Data.puntaje, 512 - 30, 569);
         app.text(minutos + ":" + segundos, 701 - 30, 668);
         app.text(Data.monedasRecogidas, 777 - 30, 773);
-Math.random();
+        Math.random();
         //  app.text
         t += 0.01;
-        app.text(app.mouseX + " " + app.mouseY, app.mouseX, app.mouseY);
+   //     app.text(app.mouseX + " " + app.mouseY, app.mouseX, app.mouseY);
+    }
+
+    @Override
+    public void mouseReleased() {
+        p = new Minim(app).loadFile("../data/sounds/Glacier - Neos.mp3", 2048);
+        p.play();
+        AdministradorPantalla.cambiarPantalla(new PresentacionJuego());
     }
 
     @Override

@@ -53,7 +53,7 @@ public class Jugador {
         velocity.y = 0.2f;
         app.noStroke();
 
-        location = new PVector(app.mouseX, 900);
+
         app.pushMatrix();
         app.translate(location.x, location.y);
         app.rotate(velocity.heading() - app.PI / 2);
@@ -65,15 +65,19 @@ public class Jugador {
         } else {
 
         }
-
         //location.x = app.mouseX;
-
         if (Main.valorFloats != null) {
             float bufferX = app.map(Main.valorFloats[1], -30, 20, -rango, rango);
             location.x = (1920 / 2) + bufferX;
-            app.image(image, 0+app.random(-5,5), -30+app.random(-5,5));
+            acceleration = new PVector(app.map(valor - location.x, -100, 100, -.4f, .4f), 1);
+            valor = location.x;
+            app.image(image, 0 + app.random(-3, 3), -30 + app.random(-3, 3));
         } else {
-            app.image(image, app.random(-5,5), -30+app.random(-5,5));
+
+            location = new PVector(app.mouseX, 900);
+            acceleration = new PVector(app.map(valor - app.mouseX, -100, 100, -.4f, .4f), 1);
+            valor = app.mouseX;
+            app.image(image, app.random(-5, 5), -30 + app.random(-5, 5));
         }
         app.popMatrix();
         velocity.x = acceleration.x;
@@ -89,7 +93,7 @@ public class Jugador {
     public void comprobar(Path p) {
         fuera = false;
         for (PVector pv : p.getPosicionesSalida()) {
-          //   app.ellipse(pv.x, pv.y, 500, 500);
+            //   app.ellipse(pv.x, pv.y, 500, 500);
             if (app.dist(location.x, location.y, pv.x, pv.y) < 250) {
                 fuera = true;
                 //  System.out.println("se fuera");

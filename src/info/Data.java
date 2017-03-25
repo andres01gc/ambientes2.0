@@ -25,12 +25,12 @@ public class Data {
     public static int combustibleDeplegado;
     public static int combustibleObtenido;
     public static int tiempoFueraDelCamino;
+
+
     private Table table;
     private static Data d;
 
-
     public static void resetData() {
-
         monedasRecogidas = 0;
         monedasDesplegadas = 0;
         sentadillas = 0;
@@ -39,9 +39,7 @@ public class Data {
         combustibleDeplegado = 0;
         combustibleObtenido = 0;
         tiempoFueraDelCamino = 0;
-
     }
-
 
     public void crearTablas() {
         table.addColumn("puntaje");
@@ -77,7 +75,6 @@ public class Data {
 
         return d;
     }
-
 
 
     Data() {

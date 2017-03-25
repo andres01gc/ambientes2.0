@@ -50,7 +50,6 @@ public class Main extends PApplet {
         m = new Minim(this);
         p = m.loadFile("../data/sounds/Glacier - Neos.mp3", 2048);
         p.play();
-        p.setVolume(.1f);
 
 
         Pantalla.app = this;
@@ -58,7 +57,7 @@ public class Main extends PApplet {
         textFont(createFont("../data/resources/fuente.otf", 200));
 
         logica = new Logica(this);
-        //  escucharArduino();
+         escucharArduino();
 
     }
 
@@ -101,7 +100,6 @@ public class Main extends PApplet {
                 }
             }
         }).start();
-
     }
 
     public void draw() {
@@ -144,6 +142,5 @@ public class Main extends PApplet {
     public void serialEvent(Serial myPort) {
         inString = myPort.readStringUntil('\n');
     }
-
 
 }
